@@ -6,11 +6,19 @@
 <title>Ottawa Muslim Community Outreach</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f4f8;min-height:100vh;padding-bottom:40px;}
-.header{background:#1A5276;color:#fff;padding:14px 18px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f4f8;min-height:100vh;padding-bottom:60px;}
+.header{background:#1A5276;color:#fff;padding:14px 18px;position:sticky;top:0;z-index:300;box-shadow:0 2px 8px rgba(0,0,0,.2);}
 .header h1{font-size:16px;font-weight:600;}
 .header p{font-size:11px;opacity:.75;margin-top:2px;}
-.form-wrap{max-width:480px;margin:0 auto;padding:14px;}
+
+/* Tab bar */
+.tab-bar{display:flex;background:#fff;border-bottom:1px solid #dde3ea;position:sticky;top:52px;z-index:200;}
+.tab-btn{flex:1;padding:12px 8px;font-size:13px;font-weight:500;text-align:center;cursor:pointer;border:none;background:none;color:#888;border-bottom:2.5px solid transparent;transition:all .15s;}
+.tab-btn.active{color:#1A5276;border-bottom-color:#1A5276;font-weight:600;}
+
+/* Shared */
+.pane{display:none;max-width:480px;margin:0 auto;padding:14px;}
+.pane.active{display:block;}
 .card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:0.5px solid #e0e6ed;box-shadow:0 1px 4px rgba(0,0,0,.05);}
 .card-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#888;margin-bottom:12px;}
 label{display:block;font-size:13px;font-weight:500;color:#333;margin-bottom:4px;margin-top:10px;}
@@ -20,13 +28,19 @@ select:focus,input:focus,textarea:focus{border-color:#1A5276;box-shadow:0 0 0 3p
 textarea{resize:none;line-height:1.5;}
 .req{color:#e74c3c;}
 .hint{font-size:11px;color:#aaa;margin-top:3px;}
+.err-msg{font-size:12px;color:#e74c3c;margin-top:4px;display:none;}
+.field-err{border-color:#e74c3c !important;}
+
+/* Address autocomplete */
 #addr-wrap{position:relative;}
 .ac-drop{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid #dde3ea;border-top:none;border-radius:0 0 8px 8px;z-index:999;display:none;box-shadow:0 4px 12px rgba(0,0,0,.1);}
 .ac-item{padding:10px 12px;cursor:pointer;border-bottom:0.5px solid #f0f0f0;}
 .ac-item:last-child{border-bottom:none;}
-.ac-item:hover{background:#f5f9ff;}
+.ac-item:hover,.ac-item:active{background:#f5f9ff;}
 .ac-main{font-size:14px;font-weight:500;color:#1a1a1a;}
 .ac-sub{font-size:11px;color:#999;margin-top:1px;}
+
+/* Returning household banner */
 .rh-banner{display:none;background:#EAF5EA;border:1.5px solid #6AAF6A;border-radius:8px;padding:10px 12px;margin-top:8px;}
 .rh-banner.show{display:block;}
 .rh-title{font-size:12px;font-weight:700;color:#1E5C1E;margin-bottom:4px;}
@@ -34,6 +48,8 @@ textarea{resize:none;line-height:1.5;}
 .rh-new{background:#FFF8E1;border-color:#F0A500;}
 .rh-new .rh-title{color:#7D5000;}
 .rh-new .rh-meta{color:#9C6D00;}
+
+/* Outcome buttons */
 .oc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
 .oc-btn{padding:14px 8px;border-radius:10px;border:1.5px solid #dde3ea;font-size:14px;font-weight:500;text-align:center;cursor:pointer;transition:all .15s;background:#fff;color:#555;user-select:none;-webkit-tap-highlight-color:transparent;}
 .oc-btn:active{transform:scale(.97);}
@@ -43,30 +59,97 @@ textarea{resize:none;line-height:1.5;}
 .oc-btn.oc-declined{background:#D0E4F5;border-color:#4A90C4;color:#1A3D5C;}
 .fu-fields{display:none;background:#FFFBF0;border-radius:8px;padding:12px;border:1.5px solid #F0D060;margin-top:8px;}
 .fu-fields.show{display:block;}
+
+/* Volunteer chips */
 .vol-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px;}
 .vol-chip{padding:8px 12px;border-radius:20px;border:1.5px solid #dde3ea;font-size:13px;cursor:pointer;background:#fff;color:#444;transition:all .15s;white-space:nowrap;}
 .vol-chip.selected{background:#1A5276;border-color:#1A5276;color:#fff;font-weight:600;}
 .loading-chips{font-size:12px;color:#aaa;padding:8px 0;}
-.err-msg{font-size:12px;color:#e74c3c;margin-top:4px;display:none;}
-.field-err{border-color:#e74c3c !important;}
+
+/* Submit */
 .submit-btn{width:100%;padding:16px;background:#1A5276;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px;transition:background .15s;}
 .submit-btn:active{background:#154360;}
 .submit-btn:disabled{background:#b0bec5;cursor:not-allowed;}
+
+/* Success */
 .success-wrap{display:none;max-width:480px;margin:60px auto;padding:20px;text-align:center;}
 .success-icon{width:68px;height:68px;background:#D5E8D4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;}
 .success-wrap h2{font-size:20px;font-weight:600;color:#1E5C1E;margin-bottom:8px;}
 .success-wrap p{font-size:14px;color:#666;margin-bottom:24px;line-height:1.6;}
 .another-btn{padding:12px 28px;background:#1A5276;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;}
+
+/* Notice */
 .notice{background:#FFF3CD;border:1px solid #F0A500;border-radius:8px;padding:9px 12px;font-size:12px;color:#7D5000;margin-bottom:10px;}
+
+/* ── Search tab styles ───────────────────────────────────────────────── */
+.search-bar{display:flex;gap:8px;margin-bottom:12px;}
+.search-bar input{flex:1;padding:11px 12px;border:1.5px solid #dde3ea;border-radius:8px;font-size:15px;outline:none;}
+.search-bar input:focus{border-color:#1A5276;}
+.search-btn{padding:11px 16px;background:#1A5276;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
+
+.filter-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.filter-row select{padding:9px 10px;border:1.5px solid #dde3ea;border-radius:8px;font-size:13px;background:#fff;-webkit-appearance:none;outline:none;}
+.filter-row select:focus{border-color:#1A5276;}
+.filter-full{grid-column:1/-1;}
+
+.overdue-toggle{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#FFF0F0;border:1px solid #FFB3B3;border-radius:8px;margin-bottom:12px;cursor:pointer;}
+.overdue-toggle input{width:16px;height:16px;cursor:pointer;}
+.overdue-toggle label{font-size:13px;color:#922B21;font-weight:500;cursor:pointer;margin:0;}
+
+.results-header{font-size:12px;color:#888;margin-bottom:8px;padding:0 2px;}
+
+.result-card{background:#fff;border-radius:12px;border:0.5px solid #e0e6ed;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);}
+.result-card.overdue-card{border-color:#FFB3B3;background:#FFF8F8;}
+.rc-header{padding:12px 14px;border-bottom:0.5px solid #f0f0f0;}
+.rc-name{font-size:14px;font-weight:600;color:#1a1a1a;}
+.rc-addr{font-size:12px;color:#888;margin-top:2px;}
+.rc-zone{font-size:11px;color:#1A5276;margin-top:3px;font-weight:500;}
+.rc-visits{padding:10px 14px;border-bottom:0.5px solid #f0f0f0;}
+.visit-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;color:#555;}
+.visit-row:first-child{padding-top:0;}
+.visit-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap;}
+.vb-home{background:#D5E8D4;color:#1E5C1E;}
+.vb-nothome{background:#FFC7CE;color:#7A1C1C;}
+.vb-followup{background:#FFF0C2;color:#6B4E00;}
+.vb-declined{background:#D0E4F5;color:#1A3D5C;}
+.vb-unknown{background:#eee;color:#666;}
+.overdue-tag{font-size:10px;color:#922B21;font-weight:600;background:#FFE0E0;padding:2px 6px;border-radius:8px;}
+.rc-notes{padding:10px 14px;border-bottom:0.5px solid #f0f0f0;}
+.rc-notes textarea{width:100%;border:1px solid #dde3ea;border-radius:6px;padding:7px 9px;font-size:12px;color:#333;resize:none;font-family:inherit;outline:none;}
+.rc-notes textarea:focus{border-color:#1A5276;}
+.save-notes-btn{margin-top:5px;padding:5px 12px;background:#1A5276;color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer;font-weight:500;}
+.save-notes-btn.saved{background:#1E6B34;}
+.rc-actions{padding:10px 14px;display:flex;gap:8px;}
+.log-visit-btn{flex:1;padding:9px;background:#1A5276;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;}
+.log-visit-btn:active{background:#154360;}
+
+.no-results{text-align:center;padding:40px 20px;color:#aaa;}
+.no-results .icon{font-size:36px;margin-bottom:10px;}
+.no-results p{font-size:14px;}
+
+.loading-results{text-align:center;padding:30px;color:#888;font-size:13px;}
 </style>
 </head>
 <body>
+
 <div class="header">
   <h1>Ottawa Muslim Community Outreach</h1>
   <p>Visit log — tap to record at the door</p>
 </div>
-<div id="notice-wrap" class="form-wrap" style="padding-bottom:0;"></div>
-<form id="visit-form" class="form-wrap" onsubmit="return false;">
+
+<!-- Tab bar -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('form',this)">📋 Log Visit</button>
+  <button class="tab-btn" onclick="switchTab('search',this)">🔍 Search</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!--  TAB 1 — LOG VISIT FORM                                           -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div id="notice-wrap" style="max-width:480px;margin:0 auto;padding:14px 14px 0;"></div>
+
+<form id="visit-form" class="pane active" onsubmit="return false;">
+
   <div class="card">
     <div class="card-title">Location</div>
     <label>District <span class="req">*</span></label>
@@ -77,11 +160,10 @@ textarea{resize:none;line-height:1.5;}
     </select>
     <div class="err-msg" id="err-district">Please select a district</div>
     <label>Zone <span class="req">*</span></label>
-    <select id="zone">
-      <option value="">— select district first —</option>
-    </select>
+    <select id="zone"><option value="">— select district first —</option></select>
     <div class="err-msg" id="err-zone">Please select a zone</div>
   </div>
+
   <div class="card">
     <div class="card-title">Address</div>
     <label>Street address <span class="req">*</span></label>
@@ -99,6 +181,7 @@ textarea{resize:none;line-height:1.5;}
     <label>Unit / Apt <span style="color:#aaa;font-weight:400">(optional)</span></label>
     <input type="text" id="unit" placeholder="e.g. Unit 3, Apt 2B">
   </div>
+
   <div class="card">
     <div class="card-title">Household</div>
     <label>Contact name</label>
@@ -113,6 +196,7 @@ textarea{resize:none;line-height:1.5;}
     </select>
     <div class="err-msg" id="err-contact-type">Please select a contact type</div>
   </div>
+
   <div class="card">
     <div class="card-title">Outcome <span class="req">*</span></div>
     <div class="oc-grid">
@@ -129,6 +213,7 @@ textarea{resize:none;line-height:1.5;}
       <input type="text" id="fu-reason" placeholder="e.g. Father working nights, call first">
     </div>
   </div>
+
   <div class="card">
     <div class="card-title">Volunteers on this visit <span class="req">*</span></div>
     <div class="vol-grid" id="vol-grid">
@@ -136,12 +221,15 @@ textarea{resize:none;line-height:1.5;}
     </div>
     <div class="err-msg" id="err-volunteers">Please select at least one volunteer</div>
   </div>
+
   <div class="card">
     <div class="card-title">Notes</div>
     <textarea id="notes" rows="3" placeholder="Any relevant notes about this visit..."></textarea>
   </div>
+
   <button class="submit-btn" id="submit-btn" onclick="submitForm()">Submit visit log</button>
 </form>
+
 <div class="success-wrap" id="success-wrap">
   <div class="success-icon">&#10003;</div>
   <h2>Visit logged</h2>
@@ -149,7 +237,59 @@ textarea{resize:none;line-height:1.5;}
   <button class="another-btn" onclick="resetForm()">Log another visit</button>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!--  TAB 2 — SEARCH                                                   -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div id="pane-search" class="pane">
+
+  <div class="search-bar">
+    <input type="text" id="s-query" placeholder="Name or address..." oninput="runSearch()">
+    <button class="search-btn" onclick="runSearch()">Search</button>
+  </div>
+
+  <div class="filter-row">
+    <select id="s-district" onchange="onSearchDistrictChange()">
+      <option value="">All districts</option>
+      <option value="District 1">District 1 — SMA</option>
+      <option value="District 2">District 2 — Jami Omar</option>
+    </select>
+    <select id="s-zone" onchange="runSearch()">
+      <option value="">All zones</option>
+    </select>
+  </div>
+
+  <div class="filter-row">
+    <select id="s-outcome" onchange="runSearch()">
+      <option value="">All outcomes</option>
+      <option value="Home">Home</option>
+      <option value="Not Home">Not Home</option>
+      <option value="Follow-up Needed">Follow-up Needed</option>
+      <option value="Declined">Declined</option>
+    </select>
+    <select id="s-volunteer" onchange="runSearch()">
+      <option value="">All volunteers</option>
+    </select>
+  </div>
+
+  <div class="overdue-toggle" onclick="toggleOverdue()">
+    <input type="checkbox" id="s-overdue" onchange="runSearch()">
+    <label for="s-overdue">⚠ Show overdue follow-ups only</label>
+  </div>
+
+  <div class="results-header" id="results-header"></div>
+  <div id="results-container">
+    <div class="no-results">
+      <div class="icon">🔍</div>
+      <p>Search by name, address, district,<br>zone, or outcome above.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!--  SCRIPT                                                           -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
 <script>
+// ── CONFIG ────────────────────────────────────────────────────────────
 const API_KEY   = 'AIzaSyCdzyUE88sOEbzTBmnFrX3_M92uTGwSaK4';
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbytfcjlQeCCJ_HMnBGE--cE4aDHR_5bfJfKfbSuP_rsBjXl8xyKCck50aKkP8aBCHsJ/exec';
 
@@ -158,26 +298,46 @@ const ZONES = {
   D2:['JO-01 - Bells Corners Core','JO-02 - Westcliffe Estates','JO-03 - Lynwood Village','JO-04 - Briargreen','JO-05 - Longfields','JO-06 - Bridlewood','JO-07 - Glen Cairn / Emerald Meadows','JO-08 - Crystal Beach','JO-09 - Bayshore','JO-10 - Accora Village','JO-11 - Centrepointe','JO-12 - Craig Henry / Manordale','JO-13 - Meadowlands / Borden Farm','JO-14 - Parkwood Hills']
 };
 
+// ── State ─────────────────────────────────────────────────────────────
 let selectedOutcome = null;
 let selectedVols = new Set();
 let volunteerRoster = [];
 let sessionToken = null;
+let allRecords = [];       // full dataset from sheet
+let searchDebounce = null;
+let prefillData = null;    // data passed from search → form
 
-// Ottawa centre coordinates
-const OTTAWA_LAT = 45.285;
-const OTTAWA_LNG = -75.878;
+const OTTAWA_LAT = 45.285, OTTAWA_LNG = -75.878;
 
+// ── Init ──────────────────────────────────────────────────────────────
 window.onload = async function() {
   if (API_KEY === 'YOUR_GOOGLE_API_KEY_HERE' || SHEET_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
     document.getElementById('notice-wrap').innerHTML =
-      '<div class="notice"><b>Setup needed:</b> Add your Google API key and Apps Script URL. See setup guide.</div>';
+      '<div class="notice"><b>Setup needed:</b> Add your Google API key and Apps Script URL.</div>';
   }
   if (API_KEY !== 'YOUR_GOOGLE_API_KEY_HERE') loadGoogleMaps();
   await loadRoster();
 };
 
+// ── Tab switching ─────────────────────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('visit-form').classList.remove('active');
+  document.getElementById('success-wrap').style.display = 'none';
+  document.getElementById('pane-search').classList.remove('active');
+  document.getElementById('notice-wrap').style.display = tab === 'form' ? 'block' : 'none';
+  if (tab === 'form') {
+    document.getElementById('visit-form').classList.add('active');
+    if (prefillData) applyPrefill();
+  } else {
+    document.getElementById('pane-search').classList.add('active');
+    loadAllRecords();
+  }
+}
+
+// ── Google Maps / Places ──────────────────────────────────────────────
 function loadGoogleMaps() {
-  // Use the new Places API (required for accounts created after March 2025)
   const s = document.createElement('script');
   s.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&v=weekly&callback=initMaps`;
   s.async = true;
@@ -185,118 +345,68 @@ function loadGoogleMaps() {
 }
 
 window.initMaps = async function() {
-  // Use new AutocompleteSuggestion API
   await google.maps.importLibrary("places");
   sessionToken = new google.maps.places.AutocompleteSessionToken();
-  console.log('Google Maps Places (new API) loaded successfully');
 };
 
 async function onAddressInput(val) {
   clearBanner();
-  if (!window.google || !google.maps.places.AutocompleteSuggestion || val.length < 3) {
-    hideDrop(); return;
-  }
+  if (!window.google || !google.maps.places.AutocompleteSuggestion || val.length < 3) { hideDrop(); return; }
   try {
-    const request = {
-      input: val,
-      sessionToken: sessionToken,
+    const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
+      input: val, sessionToken,
       includedRegionCodes: ['ca'],
-       locationBias: new google.maps.Circle({
-        center: { lat: OTTAWA_LAT, lng: OTTAWA_LNG },
-        radius: 20000
-      })
-    };
-    const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
-    if (!suggestions || suggestions.length === 0) { hideDrop(); return; }
+      locationBias: new google.maps.Circle({ center:{lat:OTTAWA_LAT,lng:OTTAWA_LNG}, radius:20000 })
+    });
+    if (!suggestions || !suggestions.length) { hideDrop(); return; }
     showDrop(suggestions);
-  } catch(e) {
-    console.error('Autocomplete error:', e);
-    hideDrop();
-  }
+  } catch(e) { hideDrop(); }
 }
 
 function showDrop(suggestions) {
   const drop = document.getElementById('ac-drop');
   drop.innerHTML = '';
-  suggestions.slice(0, 5).forEach(s => {
-    const pred = s.placePrediction;
-    if (!pred) return;
+  suggestions.slice(0,5).forEach(s => {
+    const pred = s.placePrediction; if (!pred) return;
+    const main = pred.mainText ? pred.mainText.toString() : pred.text.toString();
+    const sec  = pred.secondaryText ? pred.secondaryText.toString() : '';
     const item = document.createElement('div');
     item.className = 'ac-item';
-    const mainText = pred.mainText ? pred.mainText.toString() : pred.text.toString();
-    const secText  = pred.secondaryText ? pred.secondaryText.toString() : '';
-    item.innerHTML = `<div class="ac-main">${mainText}</div><div class="ac-sub">${secText}</div>`;
-    item.onclick = () => onAddressSelected(pred, mainText);
+    item.innerHTML = `<div class="ac-main">${main}</div><div class="ac-sub">${sec}</div>`;
+    item.onclick = () => onAddressSelected(main);
     drop.appendChild(item);
   });
   drop.style.display = drop.children.length ? 'block' : 'none';
 }
 
-function hideDrop() {
-  document.getElementById('ac-drop').style.display = 'none';
-}
+function hideDrop() { document.getElementById('ac-drop').style.display='none'; }
 
-async function onAddressSelected(prediction, displayText) {
-  document.getElementById('address').value = displayText;
+async function onAddressSelected(addr) {
+  document.getElementById('address').value = addr;
   hideDrop();
-  // Refresh session token after selection
   sessionToken = new google.maps.places.AutocompleteSessionToken();
-  document.getElementById('err-address').style.display = 'none';
+  document.getElementById('err-address').style.display='none';
   document.getElementById('address').classList.remove('field-err');
-  await lookupHousehold(displayText);
+  await lookupHousehold(addr);
 }
 
 document.addEventListener('click', e => {
   if (!document.getElementById('addr-wrap').contains(e.target)) hideDrop();
 });
 
-async function loadRoster() {
-  if (SHEET_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
-    volunteerRoster = ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5','Volunteer 6','Volunteer 7','Volunteer 8','Volunteer 9','Volunteer 10'];
-    buildVolGrid(); return;
-  }
-  try {
-    const res = await fetch(`${SHEET_URL}?action=roster`, {mode:'cors'});
-    const data = await res.json();
-    volunteerRoster = data.volunteers && data.volunteers.length ? data.volunteers :
-      ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
-    if (data.contacts) {
-      const dl = document.getElementById('contact-suggestions');
-      dl.innerHTML = data.contacts.map(n => `<option value="${n}">`).join('');
-    }
-  } catch(e) {
-    console.warn('Roster load failed, using placeholders:', e);
-    volunteerRoster = ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
-  }
-  buildVolGrid();
-}
-
-function buildVolGrid() {
-  const grid = document.getElementById('vol-grid');
-  grid.innerHTML = '';
-  volunteerRoster.forEach(name => {
-    const chip = document.createElement('div');
-    chip.className = 'vol-chip';
-    chip.textContent = name;
-    chip.onclick = () => toggleVol(chip, name);
-    grid.appendChild(chip);
-  });
-}
-
+// ── Household lookup ──────────────────────────────────────────────────
 async function lookupHousehold(address) {
   if (SHEET_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
   try {
-    const res = await fetch(`${SHEET_URL}?action=lookup&address=${encodeURIComponent(address)}`, {mode:'cors'});
+    const res = await fetch(`${SHEET_URL}?action=lookup&address=${encodeURIComponent(address)}`,{mode:'cors'});
     const data = await res.json();
     if (data.found) {
       showReturningBanner(data);
       if (data.contactName) document.getElementById('contact-name').value = data.contactName;
       if (data.contactType) document.getElementById('contact-type').value = data.contactType;
       if (data.notes)       document.getElementById('notes').value = data.notes;
-    } else {
-      showNewBanner();
-    }
-  } catch(e) { /* silent */ }
+    } else { showNewBanner(); }
+  } catch(e) {}
 }
 
 function showReturningBanner(data) {
@@ -310,7 +420,7 @@ function showReturningBanner(data) {
     document.getElementById('rh-title').textContent = 'Returning household';
     document.getElementById('rh-meta').innerHTML =
       `Last visited: <b>${data.lastDate||'unknown'}</b> | Volunteer: <b>${data.lastVolunteer||'unknown'}</b> | Outcome: <b>${data.lastOutcome||'unknown'}</b>`+
-      (data.notes ? `<br>Note: ${data.notes}` : '');
+      (data.notes?`<br>Note: ${data.notes}`:'');
     b.className = 'rh-banner show';
   }
 }
@@ -320,46 +430,123 @@ function showNewBanner() {
   document.getElementById('rh-meta').textContent = 'No previous visits found at this address.';
   document.getElementById('rh-banner').className = 'rh-banner show rh-new';
 }
+function clearBanner() { document.getElementById('rh-banner').className='rh-banner'; }
 
-function clearBanner() {
-  document.getElementById('rh-banner').className = 'rh-banner';
-}
-
+// ── Form interactions ─────────────────────────────────────────────────
 function onDistrictChange() {
   const d = document.getElementById('district').value;
   const sel = document.getElementById('zone');
   sel.innerHTML = d ? ZONES[d].map(z=>`<option value="${z}">${z}</option>`).join('')
     : '<option value="">— select district first —</option>';
-  document.getElementById('err-district').style.display = 'none';
+  document.getElementById('err-district').style.display='none';
 }
 
-const OC_CLASSES = {'Home':'oc-home','Not Home':'oc-nothome','Follow-up Needed':'oc-followup','Declined':'oc-declined'};
+const OC_CLASSES={'Home':'oc-home','Not Home':'oc-nothome','Follow-up Needed':'oc-followup','Declined':'oc-declined'};
 function selectOutcome(o) {
-  selectedOutcome = o;
-  ['Home','Not Home','Follow-up Needed','Declined'].forEach(x => {
-    document.getElementById(`oc-${x}`).className = 'oc-btn' + (x===o?' '+OC_CLASSES[x]:'');
+  selectedOutcome=o;
+  ['Home','Not Home','Follow-up Needed','Declined'].forEach(x=>{
+    document.getElementById(`oc-${x}`).className='oc-btn'+(x===o?' '+OC_CLASSES[x]:'');
   });
-  document.getElementById('fu-fields').className = 'fu-fields' + (o==='Follow-up Needed'?' show':'');
-  document.getElementById('err-outcome').style.display = 'none';
+  document.getElementById('fu-fields').className='fu-fields'+(o==='Follow-up Needed'?' show':'');
+  document.getElementById('err-outcome').style.display='none';
 }
 
 function toggleVol(chip, name) {
-  if (selectedVols.has(name)) { selectedVols.delete(name); chip.classList.remove('selected'); }
-  else { selectedVols.add(name); chip.classList.add('selected'); }
-  document.getElementById('err-volunteers').style.display = 'none';
+  if (selectedVols.has(name)){selectedVols.delete(name);chip.classList.remove('selected');}
+  else{selectedVols.add(name);chip.classList.add('selected');}
+  document.getElementById('err-volunteers').style.display='none';
 }
 
+async function loadRoster() {
+  if (SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
+    volunteerRoster=['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
+    buildVolGrid(); populateVolFilter(); return;
+  }
+  try {
+    const res = await fetch(`${SHEET_URL}?action=roster`,{mode:'cors'});
+    const data = await res.json();
+    volunteerRoster = data.volunteers && data.volunteers.length ? data.volunteers
+      : ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
+    if (data.contacts) {
+      const dl = document.getElementById('contact-suggestions');
+      dl.innerHTML = data.contacts.map(n=>`<option value="${n}">`).join('');
+    }
+  } catch(e) {
+    volunteerRoster=['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
+  }
+  buildVolGrid();
+  populateVolFilter();
+}
+
+function buildVolGrid() {
+  const grid = document.getElementById('vol-grid');
+  grid.innerHTML='';
+  volunteerRoster.forEach(name=>{
+    const chip=document.createElement('div');
+    chip.className='vol-chip'; chip.textContent=name;
+    chip.onclick=()=>toggleVol(chip,name);
+    grid.appendChild(chip);
+  });
+}
+
+function populateVolFilter() {
+  const sel = document.getElementById('s-volunteer');
+  sel.innerHTML='<option value="">All volunteers</option>'+
+    volunteerRoster.map(v=>`<option value="${v}">${v}</option>`).join('');
+}
+
+// ── Prefill form from search ──────────────────────────────────────────
+function prefillFromSearch(record) {
+  prefillData = record;
+  // Find the Log Visit tab button and click it
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  switchTab('form', tabBtns[0]);
+}
+
+function applyPrefill() {
+  if (!prefillData) return;
+  const r = prefillData;
+  // District
+  const distSel = document.getElementById('district');
+  if (r.district && r.district.includes('District 1')) distSel.value='D1';
+  else if (r.district && r.district.includes('District 2')) distSel.value='D2';
+  onDistrictChange();
+  // Zone
+  if (r.zone) {
+    const zoneSel = document.getElementById('zone');
+    for (let i=0; i<zoneSel.options.length; i++) {
+      if (zoneSel.options[i].value === r.zone) { zoneSel.selectedIndex=i; break; }
+    }
+  }
+  // Address, name, type, notes
+  if (r.address) document.getElementById('address').value = r.address;
+  if (r.contactName) document.getElementById('contact-name').value = r.contactName;
+  if (r.contactType) document.getElementById('contact-type').value = r.contactType;
+  if (r.notes) document.getElementById('notes').value = r.notes;
+  // Show returning banner
+  if (r.lastOutcome) {
+    document.getElementById('rh-title').textContent = 'Returning household';
+    document.getElementById('rh-meta').innerHTML =
+      `Last visited: <b>${r.lastDate||'unknown'}</b> | Outcome: <b>${r.lastOutcome}</b>`+
+      (r.lastVolunteer?` | By: <b>${r.lastVolunteer}</b>`:'');
+    document.getElementById('rh-banner').className='rh-banner show';
+  }
+  prefillData = null;
+  window.scrollTo(0,0);
+}
+
+// ── Validation & submit ───────────────────────────────────────────────
 function validate() {
-  let ok = true;
-  const show = id => { document.getElementById(id).style.display='block'; ok=false; };
+  let ok=true;
+  const show=id=>{document.getElementById(id).style.display='block';ok=false;};
   if (!document.getElementById('district').value) show('err-district');
-  if (!document.getElementById('zone').value)     show('err-zone');
-  const addr = document.getElementById('address').value.trim();
-  if (!addr) { show('err-address'); document.getElementById('address').classList.add('field-err'); }
+  if (!document.getElementById('zone').value) show('err-zone');
+  const addr=document.getElementById('address').value.trim();
+  if (!addr){show('err-address');document.getElementById('address').classList.add('field-err');}
   else document.getElementById('address').classList.remove('field-err');
   if (!document.getElementById('contact-type').value) show('err-contact-type');
   if (!selectedOutcome) show('err-outcome');
-  if (selectedOutcome==='Follow-up Needed') {
+  if (selectedOutcome==='Follow-up Needed'){
     if (!document.getElementById('fu-date').value) ok=false;
     if (!document.getElementById('fu-reason').value.trim()) ok=false;
   }
@@ -369,39 +556,39 @@ function validate() {
 
 async function submitForm() {
   if (!validate()) return;
-  const btn = document.getElementById('submit-btn');
+  const btn=document.getElementById('submit-btn');
   btn.disabled=true; btn.textContent='Submitting...';
-  const districtEl = document.getElementById('district');
-  const unit = document.getElementById('unit').value.trim();
-  const addr = document.getElementById('address').value.trim();
-  const payload = {
-    timestamp: new Date().toISOString().replace('T',' ').slice(0,16),
-    district:  districtEl.options[districtEl.selectedIndex].text,
-    zone:      document.getElementById('zone').value,
-    address:   addr + (unit?', '+unit:''),
-    contactName:    document.getElementById('contact-name').value.trim(),
-    contactType:    document.getElementById('contact-type').value,
-    outcome:        selectedOutcome,
-    followupDate:   selectedOutcome==='Follow-up Needed'?document.getElementById('fu-date').value:'',
-    followupReason: selectedOutcome==='Follow-up Needed'?document.getElementById('fu-reason').value.trim():'',
-    volunteers:     Array.from(selectedVols).join(', '),
-    notes:          document.getElementById('notes').value.trim()
+  const districtEl=document.getElementById('district');
+  const unit=document.getElementById('unit').value.trim();
+  const addr=document.getElementById('address').value.trim();
+  const payload={
+    timestamp:new Date().toISOString().replace('T',' ').slice(0,16),
+    district:districtEl.options[districtEl.selectedIndex].text,
+    zone:document.getElementById('zone').value,
+    address:addr+(unit?', '+unit:''),
+    contactName:document.getElementById('contact-name').value.trim(),
+    contactType:document.getElementById('contact-type').value,
+    outcome:selectedOutcome,
+    followupDate:selectedOutcome==='Follow-up Needed'?document.getElementById('fu-date').value:'',
+    followupReason:selectedOutcome==='Follow-up Needed'?document.getElementById('fu-reason').value.trim():'',
+    volunteers:Array.from(selectedVols).join(', '),
+    notes:document.getElementById('notes').value.trim()
   };
-  if (SHEET_URL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
-    try {
-      await fetch(SHEET_URL, {method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-    } catch(e) {}
+  if (SHEET_URL!=='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
+    try{await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}catch(e){}
   }
+  // Add to local cache for immediate search visibility
+  allRecords.unshift({...payload, lastDate:payload.timestamp.slice(0,10), lastOutcome:payload.outcome, lastVolunteer:payload.volunteers, visitCount:1});
   showSuccess(payload);
 }
 
 function showSuccess(p) {
   document.getElementById('visit-form').style.display='none';
   document.getElementById('notice-wrap').style.display='none';
-  const w = document.getElementById('success-wrap');
+  const w=document.getElementById('success-wrap');
   w.style.display='block';
-  document.getElementById('success-msg').innerHTML =
-    `<b>${p.address}</b> logged as <b>${p.outcome}</b>.<br>Volunteer(s): ${p.volunteers}.<br>Synced to the shared tracker.`;
+  document.getElementById('success-msg').innerHTML=
+    `<b>${p.address}</b> logged as <b>${p.outcome}</b>.<br>Volunteer(s): ${p.volunteers}.`;
   window.scrollTo(0,0);
 }
 
@@ -414,8 +601,177 @@ function resetForm() {
   ['Home','Not Home','Follow-up Needed','Declined'].forEach(x=>document.getElementById(`oc-${x}`).className='oc-btn');
   document.getElementById('fu-fields').className='fu-fields';
   clearBanner(); buildVolGrid();
-  if (SHEET_URL!=='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') loadRoster();
+  document.getElementById('visit-form').classList.add('active');
   window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════════════════════════════════════
+//  SEARCH TAB
+// ══════════════════════════════════════════════════════════════════════
+
+async function loadAllRecords() {
+  if (SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
+    allRecords=[]; renderResults([]); return;
+  }
+  document.getElementById('results-container').innerHTML='<div class="loading-results">Loading records...</div>';
+  try {
+    const res=await fetch(`${SHEET_URL}?action=allrecords`,{mode:'cors'});
+    const data=await res.json();
+    allRecords=data.records||[];
+    runSearch();
+  } catch(e){
+    allRecords=[];
+    document.getElementById('results-container').innerHTML='<div class="no-results"><div class="icon">⚠️</div><p>Could not load records.<br>Check your connection.</p></div>';
+  }
+}
+
+function onSearchDistrictChange() {
+  const d = document.getElementById('s-district').value;
+  const zoneSel = document.getElementById('s-zone');
+  zoneSel.innerHTML = '<option value="">All zones</option>';
+  if (d==='District 1') ZONES.D1.forEach(z=>zoneSel.innerHTML+=`<option value="${z}">${z}</option>`);
+  else if (d==='District 2') ZONES.D2.forEach(z=>zoneSel.innerHTML+=`<option value="${z}">${z}</option>`);
+  runSearch();
+}
+
+function toggleOverdue() {
+  const cb=document.getElementById('s-overdue');
+  cb.checked=!cb.checked;
+  runSearch();
+}
+
+function runSearch() {
+  clearTimeout(searchDebounce);
+  searchDebounce=setTimeout(()=>{
+    const query=(document.getElementById('s-query').value||'').toLowerCase().trim();
+    const district=document.getElementById('s-district').value.toLowerCase();
+    const zone=document.getElementById('s-zone').value;
+    const outcome=document.getElementById('s-outcome').value;
+    const volunteer=document.getElementById('s-volunteer').value.toLowerCase();
+    const overdueOnly=document.getElementById('s-overdue').checked;
+    const today=new Date();
+
+    if (!query && !district && !zone && !outcome && !volunteer && !overdueOnly){
+      document.getElementById('results-header').textContent='';
+      document.getElementById('results-container').innerHTML=
+        '<div class="no-results"><div class="icon">🔍</div><p>Search by name, address, district,<br>zone, or outcome above.</p></div>';
+      return;
+    }
+
+    // Group records by address — each unique address = one result card
+    const grouped={};
+    allRecords.forEach(r=>{
+      const key=(r.address||'').toLowerCase().trim();
+      if (!key) return;
+      if (!grouped[key]) grouped[key]={address:r.address,district:r.district,zone:r.zone,contactName:r.contactName,contactType:r.contactType,notes:r.notes,visits:[]};
+      grouped[key].visits.push({date:r.timestamp||r.date||'',outcome:r.outcome,volunteers:r.volunteers,followupDate:r.followupDate||''});
+      // Keep most recent contact name/notes
+      if (r.contactName) grouped[key].contactName=r.contactName;
+      if (r.notes)       grouped[key].notes=r.notes;
+    });
+
+    let results=Object.values(grouped).filter(h=>{
+      // Sort visits newest first
+      h.visits.sort((a,b)=>new Date(b.date)-new Date(a.date));
+      const lastVisit=h.visits[0]||{};
+      const isOverdue=lastVisit.outcome==='Follow-up Needed'&&lastVisit.followupDate&&
+        (today-new Date(lastVisit.followupDate))/86400000>7;
+
+      if (overdueOnly && !isOverdue) return false;
+      if (district && !(h.district||'').toLowerCase().includes(district)) return false;
+      if (zone && h.zone!==zone) return false;
+      if (outcome && lastVisit.outcome!==outcome) return false;
+      if (volunteer && !(lastVisit.volunteers||'').toLowerCase().includes(volunteer)) return false;
+      if (query && !(h.address||'').toLowerCase().includes(query) &&
+                   !(h.contactName||'').toLowerCase().includes(query)) return false;
+      return true;
+    });
+
+    // Sort: overdue first, then by most recent visit
+    results.sort((a,b)=>{
+      const aLast=a.visits[0]||{}, bLast=b.visits[0]||{};
+      const aOver=aLast.outcome==='Follow-up Needed'&&aLast.followupDate&&(today-new Date(aLast.followupDate))/86400000>7;
+      const bOver=bLast.outcome==='Follow-up Needed'&&bLast.followupDate&&(today-new Date(bLast.followupDate))/86400000>7;
+      if (aOver&&!bOver) return -1;
+      if (!aOver&&bOver) return 1;
+      return new Date(bLast.date)-new Date(aLast.date);
+    });
+
+    document.getElementById('results-header').textContent=
+      results.length ? `${results.length} household${results.length!==1?'s':''} found` : '';
+    renderResults(results);
+  }, 250);
+}
+
+function badgeClass(outcome){
+  return{Home:'vb-home','Not Home':'vb-nothome','Follow-up Needed':'vb-followup',Declined:'vb-declined'}[outcome]||'vb-unknown';
+}
+
+function renderResults(results) {
+  const container=document.getElementById('results-container');
+  if (!results.length){
+    container.innerHTML='<div class="no-results"><div class="icon">😔</div><p>No households found matching your search.</p></div>';
+    return;
+  }
+  const today=new Date();
+  container.innerHTML='';
+  results.forEach((h,idx)=>{
+    const lastVisit=h.visits[0]||{};
+    const prevVisit=h.visits[1]||null;
+    const isOverdue=lastVisit.outcome==='Follow-up Needed'&&lastVisit.followupDate&&
+      (today-new Date(lastVisit.followupDate))/86400000>7;
+
+    const card=document.createElement('div');
+    card.className='result-card'+(isOverdue?' overdue-card':'');
+
+    // Build visit rows HTML
+    const visitHtml = [lastVisit, prevVisit].filter(Boolean).map(v=>`
+      <div class="visit-row">
+        <span class="visit-badge ${badgeClass(v.outcome)}">${v.outcome||'Unknown'}</span>
+        <span>${v.date?v.date.slice(0,10):''}</span>
+        <span style="color:#888">${v.volunteers||''}</span>
+        ${isOverdue&&v===lastVisit?`<span class="overdue-tag">OVERDUE</span>`:''}
+      </div>`).join('');
+
+    card.innerHTML=`
+      <div class="rc-header">
+        <div class="rc-name">${h.contactName||'Unknown household'}</div>
+        <div class="rc-addr">${h.address||''}</div>
+        <div class="rc-zone">${h.zone||''}</div>
+      </div>
+      <div class="rc-visits">${visitHtml||'<div class="visit-row" style="color:#aaa">No visits recorded</div>'}</div>
+      <div class="rc-notes">
+        <textarea id="notes-${idx}" rows="2" placeholder="Notes...">${h.notes||''}</textarea>
+        <button class="save-notes-btn" onclick="saveNotes('${encodeURIComponent(h.address)}','notes-${idx}',this)">Save notes</button>
+      </div>
+      <div class="rc-actions">
+        <button class="log-visit-btn" onclick='logVisitFrom(${JSON.stringify({address:h.address,district:h.district,zone:h.zone,contactName:h.contactName,contactType:h.contactType,notes:h.notes,lastOutcome:lastVisit.outcome,lastDate:lastVisit.date?lastVisit.date.slice(0,10):"",lastVolunteer:lastVisit.volunteers||""}).replace(/'/g,"&#39;")})'>
+          + Log new visit
+        </button>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function logVisitFrom(record) {
+  prefillData=record;
+  const tabBtns=document.querySelectorAll('.tab-btn');
+  switchTab('form',tabBtns[0]);
+}
+
+async function saveNotes(encodedAddr, textareaId, btn) {
+  const address=decodeURIComponent(encodedAddr);
+  const notes=document.getElementById(textareaId).value.trim();
+  if (SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){btn.textContent='Saved!';btn.classList.add('saved');return;}
+  btn.textContent='Saving...'; btn.disabled=true;
+  try {
+    await fetch(SHEET_URL,{method:'POST',mode:'no-cors',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action:'updatenotes',address,notes})});
+    btn.textContent='Saved!'; btn.classList.add('saved');
+    // Update local cache
+    allRecords.forEach(r=>{if((r.address||'').toLowerCase()===address.toLowerCase())r.notes=notes;});
+  } catch(e){btn.textContent='Save notes';btn.disabled=false;}
 }
 </script>
 </body>
