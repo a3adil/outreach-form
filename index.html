@@ -15,95 +15,58 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .card-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:#888;margin-bottom:12px;}
 label{display:block;font-size:13px;font-weight:500;color:#333;margin-bottom:4px;margin-top:10px;}
 label:first-of-type{margin-top:0;}
-select,input[type=text],input[type=date],textarea{
-  width:100%;padding:11px 12px;border:1.5px solid #dde3ea;border-radius:8px;
-  font-size:15px;color:#1a1a1a;background:#fff;-webkit-appearance:none;outline:none;transition:border .15s;}
+select,input[type=text],input[type=date],textarea{width:100%;padding:11px 12px;border:1.5px solid #dde3ea;border-radius:8px;font-size:15px;color:#1a1a1a;background:#fff;-webkit-appearance:none;outline:none;transition:border .15s;}
 select:focus,input:focus,textarea:focus{border-color:#1A5276;box-shadow:0 0 0 3px rgba(26,82,118,.1);}
 textarea{resize:none;line-height:1.5;}
 .req{color:#e74c3c;}
 .hint{font-size:11px;color:#aaa;margin-top:3px;}
-
-/* Address autocomplete */
 #addr-wrap{position:relative;}
-.ac-drop{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid #dde3ea;
-  border-top:none;border-radius:0 0 8px 8px;z-index:999;display:none;
-  box-shadow:0 4px 12px rgba(0,0,0,.1);}
+.ac-drop{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid #dde3ea;border-top:none;border-radius:0 0 8px 8px;z-index:999;display:none;box-shadow:0 4px 12px rgba(0,0,0,.1);}
 .ac-item{padding:10px 12px;cursor:pointer;border-bottom:0.5px solid #f0f0f0;}
 .ac-item:last-child{border-bottom:none;}
 .ac-item:hover{background:#f5f9ff;}
 .ac-main{font-size:14px;font-weight:500;color:#1a1a1a;}
 .ac-sub{font-size:11px;color:#999;margin-top:1px;}
-
-/* Returning household banner */
-.rh-banner{display:none;background:#EAF5EA;border:1.5px solid #6AAF6A;border-radius:8px;
-  padding:10px 12px;margin-top:8px;}
+.rh-banner{display:none;background:#EAF5EA;border:1.5px solid #6AAF6A;border-radius:8px;padding:10px 12px;margin-top:8px;}
 .rh-banner.show{display:block;}
 .rh-title{font-size:12px;font-weight:700;color:#1E5C1E;margin-bottom:4px;}
 .rh-meta{font-size:11px;color:#2E7D32;line-height:1.7;}
 .rh-new{background:#FFF8E1;border-color:#F0A500;}
 .rh-new .rh-title{color:#7D5000;}
 .rh-new .rh-meta{color:#9C6D00;}
-
-/* Outcome buttons */
 .oc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
-.oc-btn{padding:14px 8px;border-radius:10px;border:1.5px solid #dde3ea;font-size:14px;
-  font-weight:500;text-align:center;cursor:pointer;transition:all .15s;
-  background:#fff;color:#555;user-select:none;-webkit-tap-highlight-color:transparent;}
+.oc-btn{padding:14px 8px;border-radius:10px;border:1.5px solid #dde3ea;font-size:14px;font-weight:500;text-align:center;cursor:pointer;transition:all .15s;background:#fff;color:#555;user-select:none;-webkit-tap-highlight-color:transparent;}
 .oc-btn:active{transform:scale(.97);}
-.oc-btn.oc-home    {background:#D5E8D4;border-color:#6AAF6A;color:#1E5C1E;}
-.oc-btn.oc-nothome {background:#FFC7CE;border-color:#E05555;color:#7A1C1C;}
+.oc-btn.oc-home{background:#D5E8D4;border-color:#6AAF6A;color:#1E5C1E;}
+.oc-btn.oc-nothome{background:#FFC7CE;border-color:#E05555;color:#7A1C1C;}
 .oc-btn.oc-followup{background:#FFF0C2;border-color:#D4A000;color:#6B4E00;}
 .oc-btn.oc-declined{background:#D0E4F5;border-color:#4A90C4;color:#1A3D5C;}
-
-/* Follow-up fields */
-.fu-fields{display:none;background:#FFFBF0;border-radius:8px;padding:12px;
-  border:1.5px solid #F0D060;margin-top:8px;}
+.fu-fields{display:none;background:#FFFBF0;border-radius:8px;padding:12px;border:1.5px solid #F0D060;margin-top:8px;}
 .fu-fields.show{display:block;}
-
-/* Volunteer chips */
 .vol-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px;}
-.vol-chip{padding:8px 12px;border-radius:20px;border:1.5px solid #dde3ea;font-size:13px;
-  cursor:pointer;background:#fff;color:#444;transition:all .15s;white-space:nowrap;}
+.vol-chip{padding:8px 12px;border-radius:20px;border:1.5px solid #dde3ea;font-size:13px;cursor:pointer;background:#fff;color:#444;transition:all .15s;white-space:nowrap;}
 .vol-chip.selected{background:#1A5276;border-color:#1A5276;color:#fff;font-weight:600;}
 .loading-chips{font-size:12px;color:#aaa;padding:8px 0;}
-
-/* Validation */
 .err-msg{font-size:12px;color:#e74c3c;margin-top:4px;display:none;}
 .field-err{border-color:#e74c3c !important;}
-
-/* Submit */
-.submit-btn{width:100%;padding:16px;background:#1A5276;color:#fff;border:none;
-  border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px;
-  transition:background .15s;}
+.submit-btn{width:100%;padding:16px;background:#1A5276;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px;transition:background .15s;}
 .submit-btn:active{background:#154360;}
 .submit-btn:disabled{background:#b0bec5;cursor:not-allowed;}
-
-/* Success */
 .success-wrap{display:none;max-width:480px;margin:60px auto;padding:20px;text-align:center;}
-.success-icon{width:68px;height:68px;background:#D5E8D4;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;}
+.success-icon{width:68px;height:68px;background:#D5E8D4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;}
 .success-wrap h2{font-size:20px;font-weight:600;color:#1E5C1E;margin-bottom:8px;}
 .success-wrap p{font-size:14px;color:#666;margin-bottom:24px;line-height:1.6;}
-.another-btn{padding:12px 28px;background:#1A5276;color:#fff;border:none;
-  border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;}
-
-/* Notice bar */
-.notice{background:#FFF3CD;border:1px solid #F0A500;border-radius:8px;
-  padding:9px 12px;font-size:12px;color:#7D5000;margin-bottom:10px;}
+.another-btn{padding:12px 28px;background:#1A5276;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;}
+.notice{background:#FFF3CD;border:1px solid #F0A500;border-radius:8px;padding:9px 12px;font-size:12px;color:#7D5000;margin-bottom:10px;}
 </style>
 </head>
 <body>
-
 <div class="header">
   <h1>Ottawa Muslim Community Outreach</h1>
   <p>Visit log — tap to record at the door</p>
 </div>
-
 <div id="notice-wrap" class="form-wrap" style="padding-bottom:0;"></div>
-
 <form id="visit-form" class="form-wrap" onsubmit="return false;">
-
-  <!-- District & Zone -->
   <div class="card">
     <div class="card-title">Location</div>
     <label>District <span class="req">*</span></label>
@@ -119,19 +82,16 @@ textarea{resize:none;line-height:1.5;}
     </select>
     <div class="err-msg" id="err-zone">Please select a zone</div>
   </div>
-
-  <!-- Address -->
   <div class="card">
     <div class="card-title">Address</div>
     <label>Street address <span class="req">*</span></label>
     <div id="addr-wrap">
       <input type="text" id="address" placeholder="Start typing address..."
-        autocomplete="off" oninput="onAddressInput(this.value)" onfocus="onAddressInput(this.value)">
+        autocomplete="off" oninput="onAddressInput(this.value)">
       <div class="ac-drop" id="ac-drop"></div>
     </div>
     <div class="err-msg" id="err-address">Please enter an address</div>
     <p class="hint">e.g. 45 Fernbank Rd, Stittsville</p>
-    <!-- Returning household banner -->
     <div class="rh-banner" id="rh-banner">
       <div class="rh-title" id="rh-title"></div>
       <div class="rh-meta" id="rh-meta"></div>
@@ -139,8 +99,6 @@ textarea{resize:none;line-height:1.5;}
     <label>Unit / Apt <span style="color:#aaa;font-weight:400">(optional)</span></label>
     <input type="text" id="unit" placeholder="e.g. Unit 3, Apt 2B">
   </div>
-
-  <!-- Household -->
   <div class="card">
     <div class="card-title">Household</div>
     <label>Contact name</label>
@@ -155,8 +113,6 @@ textarea{resize:none;line-height:1.5;}
     </select>
     <div class="err-msg" id="err-contact-type">Please select a contact type</div>
   </div>
-
-  <!-- Outcome -->
   <div class="card">
     <div class="card-title">Outcome <span class="req">*</span></div>
     <div class="oc-grid">
@@ -173,8 +129,6 @@ textarea{resize:none;line-height:1.5;}
       <input type="text" id="fu-reason" placeholder="e.g. Father working nights, call first">
     </div>
   </div>
-
-  <!-- Volunteers -->
   <div class="card">
     <div class="card-title">Volunteers on this visit <span class="req">*</span></div>
     <div class="vol-grid" id="vol-grid">
@@ -182,17 +136,12 @@ textarea{resize:none;line-height:1.5;}
     </div>
     <div class="err-msg" id="err-volunteers">Please select at least one volunteer</div>
   </div>
-
-  <!-- Notes -->
   <div class="card">
     <div class="card-title">Notes</div>
     <textarea id="notes" rows="3" placeholder="Any relevant notes about this visit..."></textarea>
   </div>
-
   <button class="submit-btn" id="submit-btn" onclick="submitForm()">Submit visit log</button>
 </form>
-
-<!-- Success screen -->
 <div class="success-wrap" id="success-wrap">
   <div class="success-icon">&#10003;</div>
   <h2>Visit logged</h2>
@@ -201,91 +150,125 @@ textarea{resize:none;line-height:1.5;}
 </div>
 
 <script>
-// ── CONFIG — replace these two values after setup ──────────────────────────────
 const API_KEY   = 'AIzaSyBmj0a6Iw_-YjGDYq4iRRjmu6Y0YJ45GRU';
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzKsejIaZjJ99My8JL63uOcCGA8MfoftaNE6kbCf1iqSuLkilqoIDgUxjMxJ_EhZsHj/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbytfcjlQeCCJ_HMnBGE--cE4aDHR_5bfJfKfbSuP_rsBjXl8xyKCck50aKkP8aBCHsJ/exec';
 
-// ── Zone data ──────────────────────────────────────────────────────────────────
 const ZONES = {
-  D1: [
-    'SMA-01 - Stittsville Village Core','SMA-02 - Crossing Bridge',
-    'SMA-03 - Deer Run / Timbermere','SMA-04 - Jackson Trails',
-    'SMA-05 - Fairwinds','SMA-06 - Poole Creek',
-    'SMA-07 - Forest Creek / Wyldewood','SMA-08 - Fernbank Crossing',
-    'SMA-09 - Blackstone','SMA-10 - EdenWylde',
-    'SMA-11 - Westwood','SMA-12 - Bradley Commons',
-    'SMA-13 - Abbotts Run','SMA-14 - W-4 South Stittsville',
-    'SMA-15 - Amberwood / Amberlakes','SMA-16 - Carp Rd / Rural North',
-    'SMA-17 - Bryanston Gate / Maple Grove'
-  ],
-  D2: [
-    'JO-01 - Bells Corners Core','JO-02 - Westcliffe Estates',
-    'JO-03 - Lynwood Village','JO-04 - Briargreen',
-    'JO-05 - Longfields','JO-06 - Bridlewood',
-    'JO-07 - Glen Cairn / Emerald Meadows','JO-08 - Crystal Beach',
-    'JO-09 - Bayshore','JO-10 - Accora Village',
-    'JO-11 - Centrepointe','JO-12 - Craig Henry / Manordale',
-    'JO-13 - Meadowlands / Borden Farm','JO-14 - Parkwood Hills'
-  ]
+  D1:['SMA-01 - Stittsville Village Core','SMA-02 - Crossing Bridge','SMA-03 - Deer Run / Timbermere','SMA-04 - Jackson Trails','SMA-05 - Fairwinds','SMA-06 - Poole Creek','SMA-07 - Forest Creek / Wyldewood','SMA-08 - Fernbank Crossing','SMA-09 - Blackstone','SMA-10 - EdenWylde','SMA-11 - Westwood','SMA-12 - Bradley Commons','SMA-13 - Abbotts Run','SMA-14 - W-4 South Stittsville','SMA-15 - Amberwood / Amberlakes','SMA-16 - Carp Rd / Rural North','SMA-17 - Bryanston Gate / Maple Grove'],
+  D2:['JO-01 - Bells Corners Core','JO-02 - Westcliffe Estates','JO-03 - Lynwood Village','JO-04 - Briargreen','JO-05 - Longfields','JO-06 - Bridlewood','JO-07 - Glen Cairn / Emerald Meadows','JO-08 - Crystal Beach','JO-09 - Bayshore','JO-10 - Accora Village','JO-11 - Centrepointe','JO-12 - Craig Henry / Manordale','JO-13 - Meadowlands / Borden Farm','JO-14 - Parkwood Hills']
 };
 
-// ── State ──────────────────────────────────────────────────────────────────────
-let selectedOutcome  = null;
-let selectedVols     = new Set();
-let placesService    = null;
-let autoSvc          = null;
-let sessionToken     = null;
-let allContacts      = [];   // existing contact names from sheet
-let volunteerRoster  = [];   // from registry sheet via Apps Script
+let selectedOutcome = null;
+let selectedVols = new Set();
+let volunteerRoster = [];
+let sessionToken = null;
 
-// ── Init ───────────────────────────────────────────────────────────────────────
+// Ottawa centre coordinates
+const OTTAWA_LAT = 45.285;
+const OTTAWA_LNG = -75.878;
+
 window.onload = async function() {
-  // Show config notice if keys not set
   if (API_KEY === 'YOUR_GOOGLE_API_KEY_HERE' || SHEET_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
     document.getElementById('notice-wrap').innerHTML =
-      '<div class="notice"><b>Setup needed:</b> Add your Google API key and Apps Script URL to the form. Address autocomplete and household lookup will not work until configured. See setup guide.</div>';
+      '<div class="notice"><b>Setup needed:</b> Add your Google API key and Apps Script URL. See setup guide.</div>';
   }
-  // Load Google Places
-  if (API_KEY !== 'YOUR_GOOGLE_API_KEY_HERE') loadGooglePlaces();
-  // Load volunteer roster + existing contacts from sheet
+  if (API_KEY !== 'YOUR_GOOGLE_API_KEY_HERE') loadGoogleMaps();
   await loadRoster();
 };
 
-function loadGooglePlaces() {
+function loadGoogleMaps() {
+  // Use the new Places API (required for accounts created after March 2025)
   const s = document.createElement('script');
-  s.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initPlaces`;
+  s.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&v=weekly&callback=initMaps`;
   s.async = true;
   document.head.appendChild(s);
 }
 
-window.initPlaces = function() {
-  autoSvc = new google.maps.places.AutocompleteService();
-  const div = document.createElement('div');
-  placesService = new google.maps.places.PlacesService(div);
+window.initMaps = async function() {
+  // Use new AutocompleteSuggestion API
+  await google.maps.importLibrary("places");
   sessionToken = new google.maps.places.AutocompleteSessionToken();
+  console.log('Google Maps Places (new API) loaded successfully');
 };
+
+async function onAddressInput(val) {
+  clearBanner();
+  if (!window.google || !google.maps.places.AutocompleteSuggestion || val.length < 3) {
+    hideDrop(); return;
+  }
+  try {
+    const request = {
+      input: val,
+      sessionToken: sessionToken,
+      includedRegionCodes: ['ca'],
+      locationBias: {
+        circle: {
+          center: { lat: OTTAWA_LAT, lng: OTTAWA_LNG },
+          radius: 20000
+        }
+      }
+    };
+    const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
+    if (!suggestions || suggestions.length === 0) { hideDrop(); return; }
+    showDrop(suggestions);
+  } catch(e) {
+    console.error('Autocomplete error:', e);
+    hideDrop();
+  }
+}
+
+function showDrop(suggestions) {
+  const drop = document.getElementById('ac-drop');
+  drop.innerHTML = '';
+  suggestions.slice(0, 5).forEach(s => {
+    const pred = s.placePrediction;
+    if (!pred) return;
+    const item = document.createElement('div');
+    item.className = 'ac-item';
+    const mainText = pred.mainText ? pred.mainText.toString() : pred.text.toString();
+    const secText  = pred.secondaryText ? pred.secondaryText.toString() : '';
+    item.innerHTML = `<div class="ac-main">${mainText}</div><div class="ac-sub">${secText}</div>`;
+    item.onclick = () => onAddressSelected(pred, mainText);
+    drop.appendChild(item);
+  });
+  drop.style.display = drop.children.length ? 'block' : 'none';
+}
+
+function hideDrop() {
+  document.getElementById('ac-drop').style.display = 'none';
+}
+
+async function onAddressSelected(prediction, displayText) {
+  document.getElementById('address').value = displayText;
+  hideDrop();
+  // Refresh session token after selection
+  sessionToken = new google.maps.places.AutocompleteSessionToken();
+  document.getElementById('err-address').style.display = 'none';
+  document.getElementById('address').classList.remove('field-err');
+  await lookupHousehold(displayText);
+}
+
+document.addEventListener('click', e => {
+  if (!document.getElementById('addr-wrap').contains(e.target)) hideDrop();
+});
 
 async function loadRoster() {
   if (SHEET_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
-    // Fallback placeholders
-    volunteerRoster = ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4',
-                       'Volunteer 5','Volunteer 6','Volunteer 7','Volunteer 8',
-                       'Volunteer 9','Volunteer 10'];
-    buildVolGrid();
-    return;
+    volunteerRoster = ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5','Volunteer 6','Volunteer 7','Volunteer 8','Volunteer 9','Volunteer 10'];
+    buildVolGrid(); return;
   }
   try {
-    const res = await fetch(`${SHEET_URL}?action=roster`);
+    const res = await fetch(`${SHEET_URL}?action=roster`, {mode:'cors'});
     const data = await res.json();
-    volunteerRoster = data.volunteers || [];
-    allContacts = data.contacts || [];
-    // Populate contact datalist
-    const dl = document.getElementById('contact-suggestions');
-    dl.innerHTML = allContacts.map(n => `<option value="${n}">`).join('');
+    volunteerRoster = data.volunteers && data.volunteers.length ? data.volunteers :
+      ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
+    if (data.contacts) {
+      const dl = document.getElementById('contact-suggestions');
+      dl.innerHTML = data.contacts.map(n => `<option value="${n}">`).join('');
+    }
   } catch(e) {
-    volunteerRoster = ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4',
-                       'Volunteer 5','Volunteer 6','Volunteer 7','Volunteer 8',
-                       'Volunteer 9','Volunteer 10'];
+    console.warn('Roster load failed, using placeholders:', e);
+    volunteerRoster = ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
   }
   buildVolGrid();
 }
@@ -302,236 +285,139 @@ function buildVolGrid() {
   });
 }
 
-// ── District / Zone ────────────────────────────────────────────────────────────
-function onDistrictChange() {
-  const d = document.getElementById('district').value;
-  const sel = document.getElementById('zone');
-  sel.innerHTML = d
-    ? ZONES[d].map(z => `<option value="${z}">${z}</option>`).join('')
-    : '<option value="">— select district first —</option>';
-  document.getElementById('err-district').style.display = 'none';
-}
-
-// ── Address autocomplete ───────────────────────────────────────────────────────
-function onAddressInput(val) {
-  clearBanner();
-  if (!autoSvc || val.length < 3) { hideDrop(); return; }
-  autoSvc.getPlacePredictions({
-    input: val,
-    sessionToken: sessionToken,
-    componentRestrictions: { country: 'ca' },
-    location: new google.maps.LatLng(45.285, -75.878),
-    radius: 20000,
-    types: ['address']
-  }, (preds, status) => {
-    if (status !== 'OK' || !preds) { hideDrop(); return; }
-    showDrop(preds);
-  });
-}
-
-function showDrop(preds) {
-  const drop = document.getElementById('ac-drop');
-  drop.innerHTML = '';
-  preds.forEach(p => {
-    const item = document.createElement('div');
-    item.className = 'ac-item';
-    const parts = p.description.split(',');
-    item.innerHTML = `<div class="ac-main">${parts[0]}</div>
-      <div class="ac-sub">${parts.slice(1).join(',').trim()}</div>`;
-    item.onclick = () => onAddressSelected(p);
-    drop.appendChild(item);
-  });
-  drop.style.display = 'block';
-}
-
-function hideDrop() {
-  document.getElementById('ac-drop').style.display = 'none';
-}
-
-async function onAddressSelected(prediction) {
-  const addr = prediction.structured_formatting.main_text;
-  document.getElementById('address').value = addr;
-  hideDrop();
-  sessionToken = new google.maps.places.AutocompleteSessionToken();
-  document.getElementById('err-address').style.display = 'none';
-  document.getElementById('address').classList.remove('field-err');
-  // Lookup household
-  await lookupHousehold(addr);
-}
-
-document.addEventListener('click', e => {
-  if (!document.getElementById('addr-wrap').contains(e.target)) hideDrop();
-});
-
-// ── Household lookup ───────────────────────────────────────────────────────────
 async function lookupHousehold(address) {
   if (SHEET_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
   try {
-    const res = await fetch(`${SHEET_URL}?action=lookup&address=${encodeURIComponent(address)}`);
+    const res = await fetch(`${SHEET_URL}?action=lookup&address=${encodeURIComponent(address)}`, {mode:'cors'});
     const data = await res.json();
     if (data.found) {
       showReturningBanner(data);
-      // Pre-fill fields
-      if (data.contactName)  document.getElementById('contact-name').value = data.contactName;
-      if (data.contactType) {
-        document.getElementById('contact-type').value = data.contactType;
-      }
-      if (data.notes) document.getElementById('notes').value = data.notes;
+      if (data.contactName) document.getElementById('contact-name').value = data.contactName;
+      if (data.contactType) document.getElementById('contact-type').value = data.contactType;
+      if (data.notes)       document.getElementById('notes').value = data.notes;
     } else {
       showNewBanner();
     }
-  } catch(e) { /* silent fail */ }
+  } catch(e) { /* silent */ }
 }
 
 function showReturningBanner(data) {
   const b = document.getElementById('rh-banner');
   const today = new Date().toISOString().slice(0,10);
-  // Duplicate warning
   if (data.lastDate === today) {
-    document.getElementById('rh-title').textContent = '⚠ Already logged today';
-    document.getElementById('rh-meta').textContent =
-      `This address was submitted earlier today by ${data.lastVolunteer}. Continue only if this is a separate visit.`;
+    document.getElementById('rh-title').textContent = 'Already logged today';
+    document.getElementById('rh-meta').textContent = `Submitted earlier today by ${data.lastVolunteer}. Continue only if this is a separate visit.`;
     b.className = 'rh-banner show rh-new';
   } else {
-    document.getElementById('rh-title').textContent = '↩ Returning household';
+    document.getElementById('rh-title').textContent = 'Returning household';
     document.getElementById('rh-meta').innerHTML =
-      `Last visited: <b>${data.lastDate || 'unknown'}</b> &nbsp;|&nbsp; `+
-      `Volunteer: <b>${data.lastVolunteer || 'unknown'}</b> &nbsp;|&nbsp; `+
-      `Outcome: <b>${data.lastOutcome || 'unknown'}</b>`+
+      `Last visited: <b>${data.lastDate||'unknown'}</b> | Volunteer: <b>${data.lastVolunteer||'unknown'}</b> | Outcome: <b>${data.lastOutcome||'unknown'}</b>`+
       (data.notes ? `<br>Note: ${data.notes}` : '');
     b.className = 'rh-banner show';
   }
 }
 
 function showNewBanner() {
-  document.getElementById('rh-title').textContent = '+ New household';
+  document.getElementById('rh-title').textContent = 'New household';
   document.getElementById('rh-meta').textContent = 'No previous visits found at this address.';
-  const b = document.getElementById('rh-banner');
-  b.className = 'rh-banner show rh-new';
+  document.getElementById('rh-banner').className = 'rh-banner show rh-new';
 }
 
 function clearBanner() {
   document.getElementById('rh-banner').className = 'rh-banner';
 }
 
-// ── Outcome ────────────────────────────────────────────────────────────────────
-const OC_CLASSES = {
-  'Home':'oc-home','Not Home':'oc-nothome',
-  'Follow-up Needed':'oc-followup','Declined':'oc-declined'
-};
+function onDistrictChange() {
+  const d = document.getElementById('district').value;
+  const sel = document.getElementById('zone');
+  sel.innerHTML = d ? ZONES[d].map(z=>`<option value="${z}">${z}</option>`).join('')
+    : '<option value="">— select district first —</option>';
+  document.getElementById('err-district').style.display = 'none';
+}
 
+const OC_CLASSES = {'Home':'oc-home','Not Home':'oc-nothome','Follow-up Needed':'oc-followup','Declined':'oc-declined'};
 function selectOutcome(o) {
   selectedOutcome = o;
   ['Home','Not Home','Follow-up Needed','Declined'].forEach(x => {
-    const el = document.getElementById(`oc-${x}`);
-    el.className = 'oc-btn' + (x===o ? ' '+OC_CLASSES[x] : '');
+    document.getElementById(`oc-${x}`).className = 'oc-btn' + (x===o?' '+OC_CLASSES[x]:'');
   });
-  document.getElementById('fu-fields').className =
-    'fu-fields' + (o==='Follow-up Needed' ? ' show' : '');
+  document.getElementById('fu-fields').className = 'fu-fields' + (o==='Follow-up Needed'?' show':'');
   document.getElementById('err-outcome').style.display = 'none';
 }
 
-// ── Volunteers ─────────────────────────────────────────────────────────────────
 function toggleVol(chip, name) {
-  if (selectedVols.has(name)) {
-    selectedVols.delete(name);
-    chip.classList.remove('selected');
-  } else {
-    selectedVols.add(name);
-    chip.classList.add('selected');
-  }
+  if (selectedVols.has(name)) { selectedVols.delete(name); chip.classList.remove('selected'); }
+  else { selectedVols.add(name); chip.classList.add('selected'); }
   document.getElementById('err-volunteers').style.display = 'none';
 }
 
-// ── Validation ─────────────────────────────────────────────────────────────────
 function validate() {
   let ok = true;
-  const show = (id) => { document.getElementById(id).style.display='block'; ok=false; };
+  const show = id => { document.getElementById(id).style.display='block'; ok=false; };
   if (!document.getElementById('district').value) show('err-district');
   if (!document.getElementById('zone').value)     show('err-zone');
   const addr = document.getElementById('address').value.trim();
-  if (!addr) {
-    show('err-address');
-    document.getElementById('address').classList.add('field-err');
-  } else {
-    document.getElementById('address').classList.remove('field-err');
-  }
+  if (!addr) { show('err-address'); document.getElementById('address').classList.add('field-err'); }
+  else document.getElementById('address').classList.remove('field-err');
   if (!document.getElementById('contact-type').value) show('err-contact-type');
   if (!selectedOutcome) show('err-outcome');
   if (selectedOutcome==='Follow-up Needed') {
-    if (!document.getElementById('fu-date').value)   ok=false;
+    if (!document.getElementById('fu-date').value) ok=false;
     if (!document.getElementById('fu-reason').value.trim()) ok=false;
   }
   if (selectedVols.size===0) show('err-volunteers');
   return ok;
 }
 
-// ── Submit ─────────────────────────────────────────────────────────────────────
 async function submitForm() {
   if (!validate()) return;
   const btn = document.getElementById('submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Submitting...';
-
+  btn.disabled=true; btn.textContent='Submitting...';
   const districtEl = document.getElementById('district');
-  const districtText = districtEl.options[districtEl.selectedIndex].text;
   const unit = document.getElementById('unit').value.trim();
   const addr = document.getElementById('address').value.trim();
-
   const payload = {
-    timestamp:    new Date().toISOString().replace('T',' ').slice(0,16),
-    district:     districtText,
-    zone:         document.getElementById('zone').value,
-    address:      addr + (unit ? ', '+unit : ''),
-    contactName:  document.getElementById('contact-name').value.trim(),
-    contactType:  document.getElementById('contact-type').value,
-    outcome:      selectedOutcome,
-    followupDate: selectedOutcome==='Follow-up Needed'
-                    ? document.getElementById('fu-date').value : '',
-    followupReason: selectedOutcome==='Follow-up Needed'
-                    ? document.getElementById('fu-reason').value.trim() : '',
-    volunteers:   Array.from(selectedVols).join(', '),
-    notes:        document.getElementById('notes').value.trim()
+    timestamp: new Date().toISOString().replace('T',' ').slice(0,16),
+    district:  districtEl.options[districtEl.selectedIndex].text,
+    zone:      document.getElementById('zone').value,
+    address:   addr + (unit?', '+unit:''),
+    contactName:    document.getElementById('contact-name').value.trim(),
+    contactType:    document.getElementById('contact-type').value,
+    outcome:        selectedOutcome,
+    followupDate:   selectedOutcome==='Follow-up Needed'?document.getElementById('fu-date').value:'',
+    followupReason: selectedOutcome==='Follow-up Needed'?document.getElementById('fu-reason').value.trim():'',
+    volunteers:     Array.from(selectedVols).join(', '),
+    notes:          document.getElementById('notes').value.trim()
   };
-
   if (SHEET_URL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
     try {
-      await fetch(SHEET_URL, {
-        method:'POST', mode:'no-cors',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(payload)
-      });
-    } catch(e) { /* no-cors always throws, ignore */ }
+      await fetch(SHEET_URL, {method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    } catch(e) {}
   }
-
   showSuccess(payload);
 }
 
 function showSuccess(p) {
-  document.getElementById('visit-form').style.display = 'none';
-  document.getElementById('notice-wrap').style.display = 'none';
-  const wrap = document.getElementById('success-wrap');
-  wrap.style.display = 'block';
+  document.getElementById('visit-form').style.display='none';
+  document.getElementById('notice-wrap').style.display='none';
+  const w = document.getElementById('success-wrap');
+  w.style.display='block';
   document.getElementById('success-msg').innerHTML =
-    `<b>${p.address}</b> logged as <b>${p.outcome}</b>.<br>`+
-    `Volunteer(s): ${p.volunteers}.<br>Synced to the shared tracker.`;
+    `<b>${p.address}</b> logged as <b>${p.outcome}</b>.<br>Volunteer(s): ${p.volunteers}.<br>Synced to the shared tracker.`;
   window.scrollTo(0,0);
 }
 
 function resetForm() {
   document.getElementById('visit-form').reset();
-  document.getElementById('visit-form').style.display = 'block';
-  document.getElementById('notice-wrap').style.display = 'block';
-  document.getElementById('success-wrap').style.display = 'none';
-  selectedOutcome = null;
-  selectedVols.clear();
-  ['Home','Not Home','Follow-up Needed','Declined'].forEach(x =>
-    document.getElementById(`oc-${x}`).className='oc-btn');
-  document.getElementById('fu-fields').className = 'fu-fields';
-  clearBanner();
-  buildVolGrid();
+  document.getElementById('visit-form').style.display='block';
+  document.getElementById('notice-wrap').style.display='block';
+  document.getElementById('success-wrap').style.display='none';
+  selectedOutcome=null; selectedVols.clear();
+  ['Home','Not Home','Follow-up Needed','Declined'].forEach(x=>document.getElementById(`oc-${x}`).className='oc-btn');
+  document.getElementById('fu-fields').className='fu-fields';
+  clearBanner(); buildVolGrid();
+  if (SHEET_URL!=='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') loadRoster();
   window.scrollTo(0,0);
-  if (SHEET_URL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') loadRoster();
 }
 </script>
 </body>
