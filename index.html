@@ -201,12 +201,10 @@ async function onAddressInput(val) {
       input: val,
       sessionToken: sessionToken,
       includedRegionCodes: ['ca'],
-      locationBias: {
-        circle: {
-          center: { lat: OTTAWA_LAT, lng: OTTAWA_LNG },
-          radius: 20000
-        }
-      }
+       locationBias: new google.maps.Circle({
+        center: { lat: OTTAWA_LAT, lng: OTTAWA_LNG },
+        radius: 20000
+      })
     };
     const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(request);
     if (!suggestions || suggestions.length === 0) { hideDrop(); return; }
