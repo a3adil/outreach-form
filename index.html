@@ -10,13 +10,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .header{background:#1A5276;color:#fff;padding:14px 18px;position:sticky;top:0;z-index:300;box-shadow:0 2px 8px rgba(0,0,0,.2);}
 .header h1{font-size:16px;font-weight:600;}
 .header p{font-size:11px;opacity:.75;margin-top:2px;}
-
-/* Tab bar */
 .tab-bar{display:flex;background:#fff;border-bottom:1px solid #dde3ea;position:sticky;top:52px;z-index:200;}
 .tab-btn{flex:1;padding:12px 8px;font-size:13px;font-weight:500;text-align:center;cursor:pointer;border:none;background:none;color:#888;border-bottom:2.5px solid transparent;transition:all .15s;}
 .tab-btn.active{color:#1A5276;border-bottom-color:#1A5276;font-weight:600;}
-
-/* Shared */
 .pane{display:none;max-width:480px;margin:0 auto;padding:14px;}
 .pane.active{display:block;}
 .card{background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:0.5px solid #e0e6ed;box-shadow:0 1px 4px rgba(0,0,0,.05);}
@@ -30,8 +26,6 @@ textarea{resize:none;line-height:1.5;}
 .hint{font-size:11px;color:#aaa;margin-top:3px;}
 .err-msg{font-size:12px;color:#e74c3c;margin-top:4px;display:none;}
 .field-err{border-color:#e74c3c !important;}
-
-/* Address autocomplete */
 #addr-wrap{position:relative;}
 .ac-drop{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid #dde3ea;border-top:none;border-radius:0 0 8px 8px;z-index:999;display:none;box-shadow:0 4px 12px rgba(0,0,0,.1);}
 .ac-item{padding:10px 12px;cursor:pointer;border-bottom:0.5px solid #f0f0f0;}
@@ -39,8 +33,6 @@ textarea{resize:none;line-height:1.5;}
 .ac-item:hover,.ac-item:active{background:#f5f9ff;}
 .ac-main{font-size:14px;font-weight:500;color:#1a1a1a;}
 .ac-sub{font-size:11px;color:#999;margin-top:1px;}
-
-/* Returning household banner */
 .rh-banner{display:none;background:#EAF5EA;border:1.5px solid #6AAF6A;border-radius:8px;padding:10px 12px;margin-top:8px;}
 .rh-banner.show{display:block;}
 .rh-title{font-size:12px;font-weight:700;color:#1E5C1E;margin-bottom:4px;}
@@ -48,8 +40,6 @@ textarea{resize:none;line-height:1.5;}
 .rh-new{background:#FFF8E1;border-color:#F0A500;}
 .rh-new .rh-title{color:#7D5000;}
 .rh-new .rh-meta{color:#9C6D00;}
-
-/* Outcome buttons */
 .oc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
 .oc-btn{padding:14px 8px;border-radius:10px;border:1.5px solid #dde3ea;font-size:14px;font-weight:500;text-align:center;cursor:pointer;transition:all .15s;background:#fff;color:#555;user-select:none;-webkit-tap-highlight-color:transparent;}
 .oc-btn:active{transform:scale(.97);}
@@ -59,45 +49,46 @@ textarea{resize:none;line-height:1.5;}
 .oc-btn.oc-declined{background:#D0E4F5;border-color:#4A90C4;color:#1A3D5C;}
 .fu-fields{display:none;background:#FFFBF0;border-radius:8px;padding:12px;border:1.5px solid #F0D060;margin-top:8px;}
 .fu-fields.show{display:block;}
-
-/* Volunteer chips */
 .vol-grid{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px;}
 .vol-chip{padding:8px 12px;border-radius:20px;border:1.5px solid #dde3ea;font-size:13px;cursor:pointer;background:#fff;color:#444;transition:all .15s;white-space:nowrap;}
 .vol-chip.selected{background:#1A5276;border-color:#1A5276;color:#fff;font-weight:600;}
 .loading-chips{font-size:12px;color:#aaa;padding:8px 0;}
-
-/* Submit */
 .submit-btn{width:100%;padding:16px;background:#1A5276;color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px;transition:background .15s;}
 .submit-btn:active{background:#154360;}
 .submit-btn:disabled{background:#b0bec5;cursor:not-allowed;}
-
-/* Success */
 .success-wrap{display:none;max-width:480px;margin:60px auto;padding:20px;text-align:center;}
 .success-icon{width:68px;height:68px;background:#D5E8D4;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:30px;}
 .success-wrap h2{font-size:20px;font-weight:600;color:#1E5C1E;margin-bottom:8px;}
 .success-wrap p{font-size:14px;color:#666;margin-bottom:24px;line-height:1.6;}
 .another-btn{padding:12px 28px;background:#1A5276;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;}
-
-/* Notice */
 .notice{background:#FFF3CD;border:1px solid #F0A500;border-radius:8px;padding:9px 12px;font-size:12px;color:#7D5000;margin-bottom:10px;}
 
-/* ── Search tab styles ───────────────────────────────────────────────── */
+/* Lock zone toggle */
+.lock-zone-bar{display:flex;align-items:center;justify-content:space-between;background:#EAF1FB;border:1px solid #AEC6E8;border-radius:8px;padding:9px 12px;margin-bottom:12px;}
+.lock-zone-bar .lz-text{font-size:12px;color:#1A5276;font-weight:500;}
+.lock-zone-bar .lz-sub{font-size:10px;color:#5B8DB8;margin-top:1px;}
+.lz-toggle{position:relative;width:40px;height:22px;flex-shrink:0;}
+.lz-toggle input{opacity:0;width:0;height:0;}
+.lz-slider{position:absolute;inset:0;background:#ccc;border-radius:11px;cursor:pointer;transition:.2s;}
+.lz-slider:before{content:"";position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.2s;}
+.lz-toggle input:checked+.lz-slider{background:#1A5276;}
+.lz-toggle input:checked+.lz-slider:before{transform:translateX(18px);}
+.locked-indicator{background:#1A5276;color:#fff;border-radius:8px;padding:8px 12px;font-size:12px;margin-bottom:12px;display:none;}
+.locked-indicator.show{display:flex;align-items:center;justify-content:space-between;}
+.unlock-btn{font-size:11px;color:#AEC6E8;cursor:pointer;text-decoration:underline;background:none;border:none;}
+
+/* Search tab */
 .search-bar{display:flex;gap:8px;margin-bottom:12px;}
 .search-bar input{flex:1;padding:11px 12px;border:1.5px solid #dde3ea;border-radius:8px;font-size:15px;outline:none;}
 .search-bar input:focus{border-color:#1A5276;}
 .search-btn{padding:11px 16px;background:#1A5276;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
-
 .filter-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
 .filter-row select{padding:9px 10px;border:1.5px solid #dde3ea;border-radius:8px;font-size:13px;background:#fff;-webkit-appearance:none;outline:none;}
 .filter-row select:focus{border-color:#1A5276;}
-.filter-full{grid-column:1/-1;}
-
 .overdue-toggle{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#FFF0F0;border:1px solid #FFB3B3;border-radius:8px;margin-bottom:12px;cursor:pointer;}
 .overdue-toggle input{width:16px;height:16px;cursor:pointer;}
 .overdue-toggle label{font-size:13px;color:#922B21;font-weight:500;cursor:pointer;margin:0;}
-
 .results-header{font-size:12px;color:#888;margin-bottom:8px;padding:0 2px;}
-
 .result-card{background:#fff;border-radius:12px;border:0.5px solid #e0e6ed;margin-bottom:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05);}
 .result-card.overdue-card{border-color:#FFB3B3;background:#FFF8F8;}
 .rc-header{padding:12px 14px;border-bottom:0.5px solid #f0f0f0;}
@@ -105,8 +96,7 @@ textarea{resize:none;line-height:1.5;}
 .rc-addr{font-size:12px;color:#888;margin-top:2px;}
 .rc-zone{font-size:11px;color:#1A5276;margin-top:3px;font-weight:500;}
 .rc-visits{padding:10px 14px;border-bottom:0.5px solid #f0f0f0;}
-.visit-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;color:#555;}
-.visit-row:first-child{padding-top:0;}
+.visit-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;color:#555;flex-wrap:wrap;}
 .visit-badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;white-space:nowrap;}
 .vb-home{background:#D5E8D4;color:#1E5C1E;}
 .vb-nothome{background:#FFC7CE;color:#7A1C1C;}
@@ -121,36 +111,44 @@ textarea{resize:none;line-height:1.5;}
 .save-notes-btn.saved{background:#1E6B34;}
 .rc-actions{padding:10px 14px;display:flex;gap:8px;}
 .log-visit-btn{flex:1;padding:9px;background:#1A5276;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;}
-.log-visit-btn:active{background:#154360;}
-
 .no-results{text-align:center;padding:40px 20px;color:#aaa;}
 .no-results .icon{font-size:36px;margin-bottom:10px;}
-.no-results p{font-size:14px;}
-
 .loading-results{text-align:center;padding:30px;color:#888;font-size:13px;}
+.cache-status{font-size:10px;color:#aaa;text-align:right;padding:0 2px 6px;}
 </style>
 </head>
 <body>
-
 <div class="header">
   <h1>Ottawa Muslim Community Outreach</h1>
   <p>Visit log — tap to record at the door</p>
 </div>
-
-<!-- Tab bar -->
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('form',this)">📋 Log Visit</button>
   <button class="tab-btn" onclick="switchTab('search',this)">🔍 Search</button>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════════ -->
-<!--  TAB 1 — LOG VISIT FORM                                           -->
-<!-- ═══════════════════════════════════════════════════════════════════ -->
 <div id="notice-wrap" style="max-width:480px;margin:0 auto;padding:14px 14px 0;"></div>
 
+<!-- ── LOG VISIT FORM ─────────────────────────────────────────────── -->
 <form id="visit-form" class="pane active" onsubmit="return false;">
 
-  <div class="card">
+  <!-- Lock zone bar -->
+  <div class="lock-zone-bar" id="lock-zone-bar">
+    <div>
+      <div class="lz-text">Lock zone for this session</div>
+      <div class="lz-sub">Keeps district &amp; zone set for all visits today</div>
+    </div>
+    <label class="lz-toggle">
+      <input type="checkbox" id="lock-toggle" onchange="onLockToggle()">
+      <span class="lz-slider"></span>
+    </label>
+  </div>
+  <div class="locked-indicator" id="locked-indicator">
+    <span id="locked-label"></span>
+    <button class="unlock-btn" onclick="unlockZone()">Unlock</button>
+  </div>
+
+  <div class="card" id="location-card">
     <div class="card-title">Location</div>
     <label>District <span class="req">*</span></label>
     <select id="district" onchange="onDistrictChange()">
@@ -185,9 +183,9 @@ textarea{resize:none;line-height:1.5;}
   <div class="card">
     <div class="card-title">Household</div>
     <label>Contact name</label>
-    <input type="text" id="contact-name" placeholder="e.g. Al-Farsi Family" list="contact-suggestions">
+    <input type="text" id="contact-name" placeholder="e.g. Al-Farsi Family" list="contact-suggestions" autocomplete="off">
     <datalist id="contact-suggestions"></datalist>
-    <p class="hint">Suggestions appear as you type based on existing records</p>
+    <p class="hint">Suggestions from existing records</p>
     <label>Contact type <span class="req">*</span></label>
     <select id="contact-type">
       <option value="">— select —</option>
@@ -233,20 +231,17 @@ textarea{resize:none;line-height:1.5;}
 <div class="success-wrap" id="success-wrap">
   <div class="success-icon">&#10003;</div>
   <h2>Visit logged</h2>
-  <p id="success-msg">Recorded in the shared tracker.<br>The coordinator can see this now.</p>
+  <p id="success-msg">Recorded in the shared tracker.</p>
   <button class="another-btn" onclick="resetForm()">Log another visit</button>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════════ -->
-<!--  TAB 2 — SEARCH                                                   -->
-<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- ── SEARCH TAB ────────────────────────────────────────────────── -->
 <div id="pane-search" class="pane">
-
   <div class="search-bar">
-    <input type="text" id="s-query" placeholder="Name or address..." oninput="runSearch()">
+    <input type="text" id="s-query" placeholder="Name or address..." oninput="runSearch()" list="search-name-suggestions" autocomplete="off">
+    <datalist id="search-name-suggestions"></datalist>
     <button class="search-btn" onclick="runSearch()">Search</button>
   </div>
-
   <div class="filter-row">
     <select id="s-district" onchange="onSearchDistrictChange()">
       <option value="">All districts</option>
@@ -257,7 +252,6 @@ textarea{resize:none;line-height:1.5;}
       <option value="">All zones</option>
     </select>
   </div>
-
   <div class="filter-row">
     <select id="s-outcome" onchange="runSearch()">
       <option value="">All outcomes</option>
@@ -270,80 +264,146 @@ textarea{resize:none;line-height:1.5;}
       <option value="">All volunteers</option>
     </select>
   </div>
-
   <div class="overdue-toggle" onclick="toggleOverdue()">
     <input type="checkbox" id="s-overdue" onchange="runSearch()">
     <label for="s-overdue">⚠ Show overdue follow-ups only</label>
   </div>
-
+  <div class="cache-status" id="cache-status"></div>
   <div class="results-header" id="results-header"></div>
   <div id="results-container">
-    <div class="no-results">
-      <div class="icon">🔍</div>
-      <p>Search by name, address, district,<br>zone, or outcome above.</p>
-    </div>
+    <div class="no-results"><div class="icon">🔍</div><p>Search by name, address,<br>district, zone or outcome.</p></div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════════ -->
-<!--  SCRIPT                                                           -->
-<!-- ═══════════════════════════════════════════════════════════════════ -->
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────
+// ── CONFIG ─────────────────────────────────────────────────────────────
 const API_KEY   = 'AIzaSyCdzyUE88sOEbzTBmnFrX3_M92uTGwSaK4';
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzEHG8AYsvF2ScmCsmVSxmfbGKNyRD5R680_tB-RK8zhstth-T1Ru5jFoafjguyYkdO/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx-wI66k2ogwRu73znof5H3dZHYn7XCGiqpShEgXY1e6910iy2S_C8nTL_AWT30_vi-/exec';
 
 const ZONES = {
   D1:['SMA-01 - Stittsville Village Core','SMA-02 - Crossing Bridge','SMA-03 - Deer Run / Timbermere','SMA-04 - Jackson Trails','SMA-05 - Fairwinds','SMA-06 - Poole Creek','SMA-07 - Forest Creek / Wyldewood','SMA-08 - Fernbank Crossing','SMA-09 - Blackstone','SMA-10 - EdenWylde','SMA-11 - Westwood','SMA-12 - Bradley Commons','SMA-13 - Abbotts Run','SMA-14 - W-4 South Stittsville','SMA-15 - Amberwood / Amberlakes','SMA-16 - Carp Rd / Rural North','SMA-17 - Bryanston Gate / Maple Grove'],
   D2:['JO-01 - Bells Corners Core','JO-02 - Westcliffe Estates','JO-03 - Lynwood Village','JO-04 - Briargreen','JO-05 - Longfields','JO-06 - Bridlewood','JO-07 - Glen Cairn / Emerald Meadows','JO-08 - Crystal Beach','JO-09 - Bayshore','JO-10 - Accora Village','JO-11 - Centrepointe','JO-12 - Craig Henry / Manordale','JO-13 - Meadowlands / Borden Farm','JO-14 - Parkwood Hills']
 };
 
-// ── State ─────────────────────────────────────────────────────────────
+// ── State ───────────────────────────────────────────────────────────────
 let selectedOutcome = null;
-let selectedVols = new Set();
+let selectedVols    = new Set();
 let volunteerRoster = [];
-let sessionToken = null;
-let allRecords = [];       // full dataset from sheet
-let searchDebounce = null;
-let prefillData = null;    // data passed from search → form
+let sessionToken    = null;
+let cachedRecords   = [];      // Option C: loaded once, refreshed every 5 min
+let cacheTime       = null;
+let searchDebounce  = null;
+let prefillData     = null;
+let zoneLocked      = false;
+let lockedDistrict  = '';
+let lockedZone      = '';
 
 const OTTAWA_LAT = 45.285, OTTAWA_LNG = -75.878;
+const CACHE_TTL  = 5 * 60 * 1000; // 5 minutes
 
-// ── Init ──────────────────────────────────────────────────────────────
+// ── Init ────────────────────────────────────────────────────────────────
 window.onload = async function() {
-  if (API_KEY === 'YOUR_GOOGLE_API_KEY_HERE' || SHEET_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
-    document.getElementById('notice-wrap').innerHTML =
-      '<div class="notice"><b>Setup needed:</b> Add your Google API key and Apps Script URL.</div>';
+  if (API_KEY==='YOUR_GOOGLE_API_KEY_HERE'||SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+    document.getElementById('notice-wrap').innerHTML=
+      '<div class="notice"><b>Setup needed:</b> Add your API key and Apps Script URL.</div>';
   }
-  if (API_KEY !== 'YOUR_GOOGLE_API_KEY_HERE') loadGoogleMaps();
+  if (API_KEY!=='YOUR_GOOGLE_API_KEY_HERE') loadGoogleMaps();
   await loadRoster();
+  // Preload records in background for instant search
+  preloadRecords();
+  // Auto-refresh cache every 5 minutes
+  setInterval(preloadRecords, CACHE_TTL);
 };
 
-// ── Tab switching ─────────────────────────────────────────────────────
+// ── Cache ───────────────────────────────────────────────────────────────
+async function preloadRecords() {
+  if (SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
+  try {
+    const res = await fetch(`${SHEET_URL}?action=allrecords`,{mode:'cors'});
+    const data = await res.json();
+    cachedRecords = data.records || [];
+    cacheTime = new Date();
+    populateNameSuggestions();
+    updateCacheStatus();
+  } catch(e) { /* silent background refresh */ }
+}
+
+function updateCacheStatus() {
+  if (!cacheTime) return;
+  const el = document.getElementById('cache-status');
+  if (el) el.textContent = `${cachedRecords.length} households · refreshed ${cacheTime.toLocaleTimeString()}`;
+}
+
+function populateNameSuggestions() {
+  const names = [...new Set(cachedRecords.map(r=>r.contactName).filter(Boolean))].sort();
+  // Form datalist
+  const dl = document.getElementById('contact-suggestions');
+  if (dl) dl.innerHTML = names.map(n=>`<option value="${n}">`).join('');
+  // Search datalist
+  const sdl = document.getElementById('search-name-suggestions');
+  if (sdl) sdl.innerHTML = names.map(n=>`<option value="${n}">`).join('');
+}
+
+// ── Tab switching ───────────────────────────────────────────────────────
 function switchTab(tab, btn) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('visit-form').classList.remove('active');
-  document.getElementById('success-wrap').style.display = 'none';
+  document.getElementById('success-wrap').style.display='none';
   document.getElementById('pane-search').classList.remove('active');
-  document.getElementById('notice-wrap').style.display = tab === 'form' ? 'block' : 'none';
-  if (tab === 'form') {
+  document.getElementById('notice-wrap').style.display = tab==='form'?'block':'none';
+  if (tab==='form') {
     document.getElementById('visit-form').classList.add('active');
     if (prefillData) applyPrefill();
   } else {
     document.getElementById('pane-search').classList.add('active');
-    loadAllRecords();
+    updateCacheStatus();
+    // Refresh if cache is stale
+    if (!cacheTime || (new Date()-cacheTime)>CACHE_TTL) preloadRecords();
+    populateVolFilter();
   }
 }
 
-// ── Google Maps / Places ──────────────────────────────────────────────
+// ── Lock zone ───────────────────────────────────────────────────────────
+function onLockToggle() {
+  const checked = document.getElementById('lock-toggle').checked;
+  if (checked) {
+    const d = document.getElementById('district').value;
+    const z = document.getElementById('zone').value;
+    if (!d || !z) {
+      document.getElementById('lock-toggle').checked = false;
+      alert('Please select a district and zone first, then lock.');
+      return;
+    }
+    zoneLocked    = true;
+    lockedDistrict = d;
+    lockedZone    = z;
+    const dLabel = document.getElementById('district').options[document.getElementById('district').selectedIndex].text;
+    document.getElementById('lock-zone-bar').style.display = 'none';
+    const ind = document.getElementById('locked-indicator');
+    ind.className = 'locked-indicator show';
+    document.getElementById('locked-label').textContent = `🔒 Locked: ${dLabel} · ${z}`;
+    document.getElementById('location-card').style.opacity = '0.5';
+    document.getElementById('location-card').style.pointerEvents = 'none';
+  }
+}
+
+function unlockZone() {
+  zoneLocked = false;
+  document.getElementById('lock-toggle').checked = false;
+  document.getElementById('lock-zone-bar').style.display = 'flex';
+  document.getElementById('locked-indicator').className = 'locked-indicator';
+  document.getElementById('location-card').style.opacity = '1';
+  document.getElementById('location-card').style.pointerEvents = 'auto';
+}
+
+// ── Google Maps / Places ────────────────────────────────────────────────
 function loadGoogleMaps() {
   const s = document.createElement('script');
   s.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&v=weekly&callback=initMaps`;
   s.async = true;
   document.head.appendChild(s);
 }
-
 window.initMaps = async function() {
   await google.maps.importLibrary("places");
   sessionToken = new google.maps.places.AutocompleteSessionToken();
@@ -351,98 +411,108 @@ window.initMaps = async function() {
 
 async function onAddressInput(val) {
   clearBanner();
-  if (!window.google || !google.maps.places.AutocompleteSuggestion || val.length < 3) { hideDrop(); return; }
+  if (!window.google||!google.maps.places.AutocompleteSuggestion||val.length<3){hideDrop();return;}
   try {
-    const { suggestions } = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
-      input: val, sessionToken,
-      includedRegionCodes: ['ca'],
-      locationBias: new google.maps.Circle({ center:{lat:OTTAWA_LAT,lng:OTTAWA_LNG}, radius:20000 })
+    const {suggestions} = await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions({
+      input:val, sessionToken,
+      includedRegionCodes:['ca'],
+      locationBias: new google.maps.Circle({center:{lat:OTTAWA_LAT,lng:OTTAWA_LNG},radius:20000})
     });
-    if (!suggestions || !suggestions.length) { hideDrop(); return; }
+    if (!suggestions||!suggestions.length){hideDrop();return;}
     showDrop(suggestions);
-  } catch(e) { hideDrop(); }
+  } catch(e){hideDrop();}
 }
 
 function showDrop(suggestions) {
-  const drop = document.getElementById('ac-drop');
-  drop.innerHTML = '';
-  suggestions.slice(0,5).forEach(s => {
-    const pred = s.placePrediction; if (!pred) return;
-    const main = pred.mainText ? pred.mainText.toString() : pred.text.toString();
-    const sec  = pred.secondaryText ? pred.secondaryText.toString() : '';
-    const item = document.createElement('div');
-    item.className = 'ac-item';
-    item.innerHTML = `<div class="ac-main">${main}</div><div class="ac-sub">${sec}</div>`;
-    item.onclick = () => onAddressSelected(main);
+  const drop=document.getElementById('ac-drop');
+  drop.innerHTML='';
+  suggestions.slice(0,5).forEach(s=>{
+    const pred=s.placePrediction; if(!pred) return;
+    const main=pred.mainText?pred.mainText.toString():pred.text.toString();
+    const sec =pred.secondaryText?pred.secondaryText.toString():'';
+    const item=document.createElement('div');
+    item.className='ac-item';
+    item.innerHTML=`<div class="ac-main">${main}</div><div class="ac-sub">${sec}</div>`;
+    item.onclick=()=>onAddressSelected(main);
     drop.appendChild(item);
   });
-  drop.style.display = drop.children.length ? 'block' : 'none';
+  drop.style.display=drop.children.length?'block':'none';
 }
-
-function hideDrop() { document.getElementById('ac-drop').style.display='none'; }
+function hideDrop(){document.getElementById('ac-drop').style.display='none';}
 
 async function onAddressSelected(addr) {
-  document.getElementById('address').value = addr;
+  document.getElementById('address').value=addr;
   hideDrop();
-  sessionToken = new google.maps.places.AutocompleteSessionToken();
+  sessionToken=new google.maps.places.AutocompleteSessionToken();
   document.getElementById('err-address').style.display='none';
   document.getElementById('address').classList.remove('field-err');
-  await lookupHousehold(addr);
+  // Check cache first (instant), fall back to server lookup
+  const cached = cachedRecords.find(r=>
+    (r.address||'').toLowerCase().includes(addr.toLowerCase()));
+  if (cached) {
+    showReturningBanner({
+      found:true, contactName:cached.contactName, contactType:cached.contactType,
+      lastOutcome:cached.lastOutcome, lastDate:cached.lastDate,
+      lastVolunteer:cached.lastVolunteer, notes:cached.notes
+    });
+    if (cached.contactName) document.getElementById('contact-name').value=cached.contactName;
+    if (cached.contactType) document.getElementById('contact-type').value=cached.contactType;
+    if (cached.notes)       document.getElementById('notes').value=cached.notes;
+  } else {
+    await lookupHousehold(addr);
+  }
 }
-
-document.addEventListener('click', e => {
-  if (!document.getElementById('addr-wrap').contains(e.target)) hideDrop();
+document.addEventListener('click',e=>{
+  if(!document.getElementById('addr-wrap').contains(e.target)) hideDrop();
 });
 
-// ── Household lookup ──────────────────────────────────────────────────
 async function lookupHousehold(address) {
-  if (SHEET_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
+  if (SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') return;
   try {
-    const res = await fetch(`${SHEET_URL}?action=lookup&address=${encodeURIComponent(address)}`,{mode:'cors'});
-    const data = await res.json();
+    const res=await fetch(`${SHEET_URL}?action=lookup&address=${encodeURIComponent(address)}`,{mode:'cors'});
+    const data=await res.json();
     if (data.found) {
       showReturningBanner(data);
-      if (data.contactName) document.getElementById('contact-name').value = data.contactName;
-      if (data.contactType) document.getElementById('contact-type').value = data.contactType;
-      if (data.notes)       document.getElementById('notes').value = data.notes;
+      if (data.contactName) document.getElementById('contact-name').value=data.contactName;
+      if (data.contactType) document.getElementById('contact-type').value=data.contactType;
+      if (data.notes)       document.getElementById('notes').value=data.notes;
     } else { showNewBanner(); }
-  } catch(e) {}
+  } catch(e){}
 }
 
 function showReturningBanner(data) {
-  const b = document.getElementById('rh-banner');
-  const today = new Date().toISOString().slice(0,10);
-  if (data.lastDate === today) {
-    document.getElementById('rh-title').textContent = 'Already logged today';
-    document.getElementById('rh-meta').textContent = `Submitted earlier today by ${data.lastVolunteer}. Continue only if this is a separate visit.`;
-    b.className = 'rh-banner show rh-new';
+  const b=document.getElementById('rh-banner');
+  const today=new Date().toISOString().slice(0,10);
+  if (data.lastDate===today) {
+    document.getElementById('rh-title').textContent='Already logged today';
+    document.getElementById('rh-meta').textContent=`Submitted today by ${data.lastVolunteer}. Continue only if this is a separate visit.`;
+    b.className='rh-banner show rh-new';
   } else {
-    document.getElementById('rh-title').textContent = 'Returning household';
-    document.getElementById('rh-meta').innerHTML =
+    document.getElementById('rh-title').textContent='Returning household';
+    document.getElementById('rh-meta').innerHTML=
       `Last visited: <b>${data.lastDate||'unknown'}</b> | Volunteer: <b>${data.lastVolunteer||'unknown'}</b> | Outcome: <b>${data.lastOutcome||'unknown'}</b>`+
       (data.notes?`<br>Note: ${data.notes}`:'');
-    b.className = 'rh-banner show';
+    b.className='rh-banner show';
   }
 }
-
-function showNewBanner() {
-  document.getElementById('rh-title').textContent = 'New household';
-  document.getElementById('rh-meta').textContent = 'No previous visits found at this address.';
-  document.getElementById('rh-banner').className = 'rh-banner show rh-new';
+function showNewBanner(){
+  document.getElementById('rh-title').textContent='New household';
+  document.getElementById('rh-meta').textContent='No previous visits found at this address.';
+  document.getElementById('rh-banner').className='rh-banner show rh-new';
 }
-function clearBanner() { document.getElementById('rh-banner').className='rh-banner'; }
+function clearBanner(){document.getElementById('rh-banner').className='rh-banner';}
 
-// ── Form interactions ─────────────────────────────────────────────────
+// ── Form interactions ───────────────────────────────────────────────────
 function onDistrictChange() {
-  const d = document.getElementById('district').value;
-  const sel = document.getElementById('zone');
-  sel.innerHTML = d ? ZONES[d].map(z=>`<option value="${z}">${z}</option>`).join('')
-    : '<option value="">— select district first —</option>';
+  const d=document.getElementById('district').value;
+  const sel=document.getElementById('zone');
+  sel.innerHTML=d?ZONES[d].map(z=>`<option value="${z}">${z}</option>`).join('')
+    :'<option value="">— select district first —</option>';
   document.getElementById('err-district').style.display='none';
 }
 
 const OC_CLASSES={'Home':'oc-home','Not Home':'oc-nothome','Follow-up Needed':'oc-followup','Declined':'oc-declined'};
-function selectOutcome(o) {
+function selectOutcome(o){
   selectedOutcome=o;
   ['Home','Not Home','Follow-up Needed','Declined'].forEach(x=>{
     document.getElementById(`oc-${x}`).className='oc-btn'+(x===o?' '+OC_CLASSES[x]:'');
@@ -451,35 +521,34 @@ function selectOutcome(o) {
   document.getElementById('err-outcome').style.display='none';
 }
 
-function toggleVol(chip, name) {
-  if (selectedVols.has(name)){selectedVols.delete(name);chip.classList.remove('selected');}
+function toggleVol(chip,name){
+  if(selectedVols.has(name)){selectedVols.delete(name);chip.classList.remove('selected');}
   else{selectedVols.add(name);chip.classList.add('selected');}
   document.getElementById('err-volunteers').style.display='none';
 }
 
-async function loadRoster() {
-  if (SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
+async function loadRoster(){
+  if(SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
     volunteerRoster=['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
     buildVolGrid(); populateVolFilter(); return;
   }
-  try {
-    const res = await fetch(`${SHEET_URL}?action=roster`,{mode:'cors'});
-    const data = await res.json();
-    volunteerRoster = data.volunteers && data.volunteers.length ? data.volunteers
-      : ['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
-    if (data.contacts) {
-      const dl = document.getElementById('contact-suggestions');
-      dl.innerHTML = data.contacts.map(n=>`<option value="${n}">`).join('');
+  try{
+    const res=await fetch(`${SHEET_URL}?action=roster`,{mode:'cors'});
+    const data=await res.json();
+    volunteerRoster=data.volunteers&&data.volunteers.length?data.volunteers
+      :['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
+    if(data.contacts){
+      const dl=document.getElementById('contact-suggestions');
+      if(dl) dl.innerHTML=data.contacts.map(n=>`<option value="${n}">`).join('');
     }
-  } catch(e) {
+  }catch(e){
     volunteerRoster=['Volunteer 1','Volunteer 2','Volunteer 3','Volunteer 4','Volunteer 5'];
   }
-  buildVolGrid();
-  populateVolFilter();
+  buildVolGrid(); populateVolFilter();
 }
 
-function buildVolGrid() {
-  const grid = document.getElementById('vol-grid');
+function buildVolGrid(){
+  const grid=document.getElementById('vol-grid');
   grid.innerHTML='';
   volunteerRoster.forEach(name=>{
     const chip=document.createElement('div');
@@ -488,74 +557,59 @@ function buildVolGrid() {
     grid.appendChild(chip);
   });
 }
-
-function populateVolFilter() {
-  const sel = document.getElementById('s-volunteer');
+function populateVolFilter(){
+  const sel=document.getElementById('s-volunteer');
+  if(!sel) return;
   sel.innerHTML='<option value="">All volunteers</option>'+
     volunteerRoster.map(v=>`<option value="${v}">${v}</option>`).join('');
 }
 
-// ── Prefill form from search ──────────────────────────────────────────
-function prefillFromSearch(record) {
-  prefillData = record;
-  // Find the Log Visit tab button and click it
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  switchTab('form', tabBtns[0]);
-}
-
-function applyPrefill() {
-  if (!prefillData) return;
-  const r = prefillData;
-  // District
-  const distSel = document.getElementById('district');
-  if (r.district && r.district.includes('District 1')) distSel.value='D1';
-  else if (r.district && r.district.includes('District 2')) distSel.value='D2';
+// ── Prefill from search ─────────────────────────────────────────────────
+function prefillFromSearch(record){prefillData=record;}
+function applyPrefill(){
+  if(!prefillData) return;
+  const r=prefillData;
+  const distSel=document.getElementById('district');
+  if(r.district&&r.district.includes('District 1')) distSel.value='D1';
+  else if(r.district&&r.district.includes('District 2')) distSel.value='D2';
   onDistrictChange();
-  // Zone
-  if (r.zone) {
-    const zoneSel = document.getElementById('zone');
-    for (let i=0; i<zoneSel.options.length; i++) {
-      if (zoneSel.options[i].value === r.zone) { zoneSel.selectedIndex=i; break; }
-    }
-  }
-  // Address, name, type, notes
-  if (r.address) document.getElementById('address').value = r.address;
-  if (r.contactName) document.getElementById('contact-name').value = r.contactName;
-  if (r.contactType) document.getElementById('contact-type').value = r.contactType;
-  if (r.notes) document.getElementById('notes').value = r.notes;
-  // Show returning banner
-  if (r.lastOutcome) {
-    document.getElementById('rh-title').textContent = 'Returning household';
-    document.getElementById('rh-meta').innerHTML =
+  if(r.zone){const zs=document.getElementById('zone');for(let i=0;i<zs.options.length;i++){if(zs.options[i].value===r.zone){zs.selectedIndex=i;break;}}}
+  if(r.address) document.getElementById('address').value=r.address;
+  if(r.contactName) document.getElementById('contact-name').value=r.contactName;
+  if(r.contactType) document.getElementById('contact-type').value=r.contactType;
+  if(r.notes) document.getElementById('notes').value=r.notes;
+  if(r.lastOutcome){
+    document.getElementById('rh-title').textContent='Returning household';
+    document.getElementById('rh-meta').innerHTML=
       `Last visited: <b>${r.lastDate||'unknown'}</b> | Outcome: <b>${r.lastOutcome}</b>`+
       (r.lastVolunteer?` | By: <b>${r.lastVolunteer}</b>`:'');
     document.getElementById('rh-banner').className='rh-banner show';
   }
-  prefillData = null;
+  prefillData=null;
   window.scrollTo(0,0);
 }
 
-// ── Validation & submit ───────────────────────────────────────────────
-function validate() {
+// ── Validation & submit ─────────────────────────────────────────────────
+function validate(){
   let ok=true;
   const show=id=>{document.getElementById(id).style.display='block';ok=false;};
-  if (!document.getElementById('district').value) show('err-district');
-  if (!document.getElementById('zone').value) show('err-zone');
+  if(!document.getElementById('district').value) show('err-district');
+  if(!document.getElementById('zone').value) show('err-zone');
   const addr=document.getElementById('address').value.trim();
-  if (!addr){show('err-address');document.getElementById('address').classList.add('field-err');}
+  if(!addr){show('err-address');document.getElementById('address').classList.add('field-err');}
   else document.getElementById('address').classList.remove('field-err');
-  if (!document.getElementById('contact-type').value) show('err-contact-type');
-  if (!selectedOutcome) show('err-outcome');
-  if (selectedOutcome==='Follow-up Needed'){
-    if (!document.getElementById('fu-date').value) ok=false;
-    if (!document.getElementById('fu-reason').value.trim()) ok=false;
+  if(!document.getElementById('contact-type').value) show('err-contact-type');
+  if(!selectedOutcome) show('err-outcome');
+  if(selectedOutcome==='Follow-up Needed'){
+    if(!document.getElementById('fu-date').value) ok=false;
+    if(!document.getElementById('fu-reason').value.trim()) ok=false;
   }
-  if (selectedVols.size===0) show('err-volunteers');
+  if(selectedVols.size===0) show('err-volunteers');
   return ok;
 }
 
-async function submitForm() {
-  if (!validate()) return;
+async function submitForm(){
+  if(!validate()) return;
   const btn=document.getElementById('submit-btn');
   btn.disabled=true; btn.textContent='Submitting...';
   const districtEl=document.getElementById('district');
@@ -574,25 +628,31 @@ async function submitForm() {
     volunteers:Array.from(selectedVols).join(', '),
     notes:document.getElementById('notes').value.trim()
   };
-  if (SHEET_URL!=='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
+  if(SHEET_URL!=='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
     try{await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}catch(e){}
   }
-  // Add to local cache for immediate search visibility
-  allRecords.unshift({...payload, lastDate:payload.timestamp.slice(0,10), lastOutcome:payload.outcome, lastVolunteer:payload.volunteers, visitCount:1});
+  // Update local cache immediately — no wait for server
+  const existing=cachedRecords.findIndex(r=>(r.address||'').toLowerCase()===payload.address.toLowerCase());
+  const newRec={address:payload.address,contactName:payload.contactName,contactType:payload.contactType,
+    district:payload.district,zone:payload.zone,lastOutcome:payload.outcome,
+    lastDate:payload.timestamp.slice(0,10),lastVolunteer:payload.volunteers,
+    followupDate:payload.followupDate,notes:payload.notes,visitCount:1,isOverdue:false};
+  if(existing>=0){newRec.visitCount=(cachedRecords[existing].visitCount||1)+1;cachedRecords[existing]=newRec;}
+  else cachedRecords.unshift(newRec);
+  populateNameSuggestions();
   showSuccess(payload);
 }
 
-function showSuccess(p) {
+function showSuccess(p){
   document.getElementById('visit-form').style.display='none';
   document.getElementById('notice-wrap').style.display='none';
-  const w=document.getElementById('success-wrap');
-  w.style.display='block';
+  document.getElementById('success-wrap').style.display='block';
   document.getElementById('success-msg').innerHTML=
     `<b>${p.address}</b> logged as <b>${p.outcome}</b>.<br>Volunteer(s): ${p.volunteers}.`;
   window.scrollTo(0,0);
 }
 
-function resetForm() {
+function resetForm(){
   document.getElementById('visit-form').reset();
   document.getElementById('visit-form').style.display='block';
   document.getElementById('notice-wrap').style.display='block';
@@ -601,46 +661,35 @@ function resetForm() {
   ['Home','Not Home','Follow-up Needed','Declined'].forEach(x=>document.getElementById(`oc-${x}`).className='oc-btn');
   document.getElementById('fu-fields').className='fu-fields';
   clearBanner(); buildVolGrid();
+  // Re-apply lock if active
+  if(zoneLocked){
+    const distSel=document.getElementById('district');
+    distSel.value=lockedDistrict; onDistrictChange();
+    const zSel=document.getElementById('zone');
+    for(let i=0;i<zSel.options.length;i++){if(zSel.options[i].value===lockedZone){zSel.selectedIndex=i;break;}}
+  }
   document.getElementById('visit-form').classList.add('active');
   window.scrollTo(0,0);
 }
 
 // ══════════════════════════════════════════════════════════════════════
-//  SEARCH TAB
+//  SEARCH TAB — runs entirely from cache (instant)
 // ══════════════════════════════════════════════════════════════════════
-
-async function loadAllRecords() {
-  if (SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
-    allRecords=[]; renderResults([]); return;
-  }
-  document.getElementById('results-container').innerHTML='<div class="loading-results">Loading records...</div>';
-  try {
-    const res=await fetch(`${SHEET_URL}?action=allrecords`,{mode:'cors'});
-    const data=await res.json();
-    allRecords=data.records||[];
-    runSearch();
-  } catch(e){
-    allRecords=[];
-    document.getElementById('results-container').innerHTML='<div class="no-results"><div class="icon">⚠️</div><p>Could not load records.<br>Check your connection.</p></div>';
-  }
-}
-
-function onSearchDistrictChange() {
-  const d = document.getElementById('s-district').value;
-  const zoneSel = document.getElementById('s-zone');
-  zoneSel.innerHTML = '<option value="">All zones</option>';
-  if (d==='District 1') ZONES.D1.forEach(z=>zoneSel.innerHTML+=`<option value="${z}">${z}</option>`);
-  else if (d==='District 2') ZONES.D2.forEach(z=>zoneSel.innerHTML+=`<option value="${z}">${z}</option>`);
+function onSearchDistrictChange(){
+  const d=document.getElementById('s-district').value;
+  const zoneSel=document.getElementById('s-zone');
+  zoneSel.innerHTML='<option value="">All zones</option>';
+  if(d==='District 1') ZONES.D1.forEach(z=>zoneSel.innerHTML+=`<option value="${z}">${z}</option>`);
+  else if(d==='District 2') ZONES.D2.forEach(z=>zoneSel.innerHTML+=`<option value="${z}">${z}</option>`);
   runSearch();
 }
 
-function toggleOverdue() {
+function toggleOverdue(){
   const cb=document.getElementById('s-overdue');
-  cb.checked=!cb.checked;
-  runSearch();
+  cb.checked=!cb.checked; runSearch();
 }
 
-function runSearch() {
+function runSearch(){
   clearTimeout(searchDebounce);
   searchDebounce=setTimeout(()=>{
     const query=(document.getElementById('s-query').value||'').toLowerCase().trim();
@@ -651,127 +700,107 @@ function runSearch() {
     const overdueOnly=document.getElementById('s-overdue').checked;
     const today=new Date();
 
-    if (!query && !district && !zone && !outcome && !volunteer && !overdueOnly){
+    if(!query&&!district&&!zone&&!outcome&&!volunteer&&!overdueOnly){
       document.getElementById('results-header').textContent='';
       document.getElementById('results-container').innerHTML=
-        '<div class="no-results"><div class="icon">🔍</div><p>Search by name, address, district,<br>zone, or outcome above.</p></div>';
+        '<div class="no-results"><div class="icon">🔍</div><p>Search by name, address,<br>district, zone or outcome.</p></div>';
       return;
     }
 
-    // Group records by address — each unique address = one result card
-    const grouped={};
-    allRecords.forEach(r=>{
-      const key=(r.address||'').toLowerCase().trim();
-      if (!key) return;
-      if (!grouped[key]) grouped[key]={address:r.address,district:r.district,zone:r.zone,contactName:r.contactName,contactType:r.contactType,notes:r.notes,visits:[]};
-      grouped[key].visits.push({date:r.timestamp||r.date||'',outcome:r.outcome,volunteers:r.volunteers,followupDate:r.followupDate||''});
-      // Keep most recent contact name/notes
-      if (r.contactName) grouped[key].contactName=r.contactName;
-      if (r.notes)       grouped[key].notes=r.notes;
-    });
-
-    let results=Object.values(grouped).filter(h=>{
-      // Sort visits newest first
-      h.visits.sort((a,b)=>new Date(b.date)-new Date(a.date));
-      const lastVisit=h.visits[0]||{};
-      const isOverdue=lastVisit.outcome==='Follow-up Needed'&&lastVisit.followupDate&&
-        (today-new Date(lastVisit.followupDate))/86400000>7;
-
-      if (overdueOnly && !isOverdue) return false;
-      if (district && !(h.district||'').toLowerCase().includes(district)) return false;
-      if (zone && h.zone!==zone) return false;
-      if (outcome && lastVisit.outcome!==outcome) return false;
-      if (volunteer && !(lastVisit.volunteers||'').toLowerCase().includes(volunteer)) return false;
-      if (query && !(h.address||'').toLowerCase().includes(query) &&
-                   !(h.contactName||'').toLowerCase().includes(query)) return false;
+    let results=cachedRecords.filter(h=>{
+      const isOverdue=h.isOverdue||(h.lastOutcome==='Follow-up Needed'&&h.followupDate&&
+        (today-new Date(h.followupDate))/86400000>7);
+      if(overdueOnly&&!isOverdue) return false;
+      if(district&&!(h.district||'').toLowerCase().includes(district)) return false;
+      if(zone&&h.zone!==zone) return false;
+      if(outcome&&h.lastOutcome!==outcome) return false;
+      if(volunteer&&!(h.lastVolunteer||'').toLowerCase().includes(volunteer)) return false;
+      if(query&&!(h.address||'').toLowerCase().includes(query)&&
+                !(h.contactName||'').toLowerCase().includes(query)) return false;
       return true;
     });
 
-    // Sort: overdue first, then by most recent visit
+    // Sort: overdue first, then most recently visited
     results.sort((a,b)=>{
-      const aLast=a.visits[0]||{}, bLast=b.visits[0]||{};
-      const aOver=aLast.outcome==='Follow-up Needed'&&aLast.followupDate&&(today-new Date(aLast.followupDate))/86400000>7;
-      const bOver=bLast.outcome==='Follow-up Needed'&&bLast.followupDate&&(today-new Date(bLast.followupDate))/86400000>7;
-      if (aOver&&!bOver) return -1;
-      if (!aOver&&bOver) return 1;
-      return new Date(bLast.date)-new Date(aLast.date);
+      const aOver=a.isOverdue||(a.lastOutcome==='Follow-up Needed'&&a.followupDate&&(today-new Date(a.followupDate))/86400000>7);
+      const bOver=b.isOverdue||(b.lastOutcome==='Follow-up Needed'&&b.followupDate&&(today-new Date(b.followupDate))/86400000>7);
+      if(aOver&&!bOver) return -1;
+      if(!aOver&&bOver) return 1;
+      return new Date(b.lastDate)-new Date(a.lastDate);
     });
 
     document.getElementById('results-header').textContent=
-      results.length ? `${results.length} household${results.length!==1?'s':''} found` : '';
+      results.length?`${results.length} household${results.length!==1?'s':''} found`:'';
     renderResults(results);
-  }, 250);
+  }, 150);
 }
 
-function badgeClass(outcome){
-  return{Home:'vb-home','Not Home':'vb-nothome','Follow-up Needed':'vb-followup',Declined:'vb-declined'}[outcome]||'vb-unknown';
+function badgeClass(o){
+  return{'Home':'vb-home','Not Home':'vb-nothome','Follow-up Needed':'vb-followup','Declined':'vb-declined'}[o]||'vb-unknown';
 }
 
-function renderResults(results) {
+function renderResults(results){
   const container=document.getElementById('results-container');
-  if (!results.length){
-    container.innerHTML='<div class="no-results"><div class="icon">😔</div><p>No households found matching your search.</p></div>';
+  if(!results.length){
+    container.innerHTML='<div class="no-results"><div class="icon">😔</div><p>No households found.</p></div>';
     return;
   }
   const today=new Date();
   container.innerHTML='';
   results.forEach((h,idx)=>{
-    const lastVisit=h.visits[0]||{};
-    const prevVisit=h.visits[1]||null;
-    const isOverdue=lastVisit.outcome==='Follow-up Needed'&&lastVisit.followupDate&&
-      (today-new Date(lastVisit.followupDate))/86400000>7;
-
+    const isOverdue=h.isOverdue||(h.lastOutcome==='Follow-up Needed'&&h.followupDate&&
+      (today-new Date(h.followupDate))/86400000>7);
     const card=document.createElement('div');
     card.className='result-card'+(isOverdue?' overdue-card':'');
-
-    // Build visit rows HTML
-    const visitHtml = [lastVisit, prevVisit].filter(Boolean).map(v=>`
-      <div class="visit-row">
-        <span class="visit-badge ${badgeClass(v.outcome)}">${v.outcome||'Unknown'}</span>
-        <span>${v.date?v.date.slice(0,10):''}</span>
-        <span style="color:#888">${v.volunteers||''}</span>
-        ${isOverdue&&v===lastVisit?`<span class="overdue-tag">OVERDUE</span>`:''}
-      </div>`).join('');
-
+    const visitHtml=`<div class="visit-row">
+      <span class="visit-badge ${badgeClass(h.lastOutcome)}">${h.lastOutcome||'Unknown'}</span>
+      <span>${h.lastDate||''}</span>
+      <span style="color:#888">${h.lastVolunteer||''}</span>
+      ${isOverdue?'<span class="overdue-tag">OVERDUE</span>':''}
+    </div>
+    ${h.visitCount>1?`<div style="font-size:11px;color:#aaa;padding:2px 0">${h.visitCount} visits total</div>`:''}`;
+    const safeRecord=JSON.stringify({address:h.address,district:h.district,zone:h.zone,
+      contactName:h.contactName,contactType:h.contactType,notes:h.notes,
+      lastOutcome:h.lastOutcome,lastDate:h.lastDate,lastVolunteer:h.lastVolunteer})
+      .replace(/'/g,"&#39;").replace(/"/g,'&quot;');
     card.innerHTML=`
       <div class="rc-header">
         <div class="rc-name">${h.contactName||'Unknown household'}</div>
         <div class="rc-addr">${h.address||''}</div>
         <div class="rc-zone">${h.zone||''}</div>
       </div>
-      <div class="rc-visits">${visitHtml||'<div class="visit-row" style="color:#aaa">No visits recorded</div>'}</div>
+      <div class="rc-visits">${visitHtml}</div>
       <div class="rc-notes">
         <textarea id="notes-${idx}" rows="2" placeholder="Notes...">${h.notes||''}</textarea>
-        <button class="save-notes-btn" onclick="saveNotes('${encodeURIComponent(h.address)}','notes-${idx}',this)">Save notes</button>
+        <button class="save-notes-btn" onclick="saveNotes('${encodeURIComponent(h.address||'')}','notes-${idx}',this)">Save notes</button>
       </div>
       <div class="rc-actions">
-        <button class="log-visit-btn" onclick='logVisitFrom(${JSON.stringify({address:h.address,district:h.district,zone:h.zone,contactName:h.contactName,contactType:h.contactType,notes:h.notes,lastOutcome:lastVisit.outcome,lastDate:lastVisit.date?lastVisit.date.slice(0,10):"",lastVolunteer:lastVisit.volunteers||""}).replace(/'/g,"&#39;")})'>
-          + Log new visit
-        </button>
+        <button class="log-visit-btn" onclick="logVisitFrom('${safeRecord}')">+ Log new visit</button>
       </div>`;
     container.appendChild(card);
   });
 }
 
-function logVisitFrom(record) {
-  prefillData=record;
-  const tabBtns=document.querySelectorAll('.tab-btn');
-  switchTab('form',tabBtns[0]);
+function logVisitFrom(recordStr){
+  try{
+    const record=JSON.parse(recordStr.replace(/&quot;/g,'"'));
+    prefillData=record;
+    const tabBtns=document.querySelectorAll('.tab-btn');
+    switchTab('form',tabBtns[0]);
+  }catch(e){console.error('prefill error',e);}
 }
 
-async function saveNotes(encodedAddr, textareaId, btn) {
+async function saveNotes(encodedAddr,textareaId,btn){
   const address=decodeURIComponent(encodedAddr);
   const notes=document.getElementById(textareaId).value.trim();
-  if (SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){btn.textContent='Saved!';btn.classList.add('saved');return;}
+  if(SHEET_URL==='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){btn.textContent='Saved!';btn.classList.add('saved');return;}
   btn.textContent='Saving...'; btn.disabled=true;
-  try {
-    await fetch(SHEET_URL,{method:'POST',mode:'no-cors',
-      headers:{'Content-Type':'application/json'},
+  try{
+    await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({action:'updatenotes',address,notes})});
     btn.textContent='Saved!'; btn.classList.add('saved');
-    // Update local cache
-    allRecords.forEach(r=>{if((r.address||'').toLowerCase()===address.toLowerCase())r.notes=notes;});
-  } catch(e){btn.textContent='Save notes';btn.disabled=false;}
+    cachedRecords.forEach(r=>{if((r.address||'').toLowerCase()===address.toLowerCase())r.notes=notes;});
+  }catch(e){btn.textContent='Save notes';btn.disabled=false;}
 }
 </script>
 </body>
