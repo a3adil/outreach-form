@@ -115,7 +115,26 @@ textarea{resize:none;line-height:1.5;}
 .no-results .icon{font-size:36px;margin-bottom:10px;}
 .loading-results{text-align:center;padding:30px;color:#888;font-size:13px;}
 .cache-status{font-size:10px;color:#aaa;text-align:right;padding:0 2px 6px;}
+
+/* Map stats bar */
+.ms-card{background:#fff;border-radius:8px;padding:8px 6px;text-align:center;border:0.5px solid #e0e6ed;}
+.ms-card .ms-num{font-size:20px;font-weight:600;}
+.ms-card .ms-lbl{font-size:10px;color:#888;margin-top:1px;}
+.ms-card.total .ms-num{color:#1A5276;}
+.ms-card.home .ms-num{color:#1E6B34;}
+.ms-card.follow .ms-num{color:#7D5000;}
+.ms-card.overdue .ms-num{color:#922B21;}
+.ms-card.overdue{background:#FFF0F0;border-color:#FFB3B3;}
+
+@keyframes pulse {
+  0%{box-shadow:0 0 0 0 rgba(231,76,60,.6);}
+  70%{box-shadow:0 0 0 8px rgba(231,76,60,0);}
+  100%{box-shadow:0 0 0 0 rgba(231,76,60,0);}
+}
+.pin-overdue{animation:pulse 1.5s infinite;}
+
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 </head>
 <body>
 <div class="header">
@@ -125,6 +144,7 @@ textarea{resize:none;line-height:1.5;}
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('form',this)">📋 Log Visit</button>
   <button class="tab-btn" onclick="switchTab('search',this)">🔍 Search</button>
+  <button class="tab-btn" onclick="switchTab('map',this)">🗺 Map</button>
 </div>
 
 <div id="notice-wrap" style="max-width:480px;margin:0 auto;padding:14px 14px 0;"></div>
@@ -183,7 +203,7 @@ textarea{resize:none;line-height:1.5;}
   <div class="card">
     <div class="card-title">Household</div>
     <label>Contact name</label>
-    <input type="text" id="contact-name" placeholder="e.g. Al-Farsi Family" list="contact-suggestions" autocomplete="off">
+    <input type="text" id="contact-name" placeholder="e.g. Al-Farsi Family" list="contact-suggestions" autocomplete="off" onblur="this.value=toTitleCase(this.value)">
     <datalist id="contact-suggestions"></datalist>
     <p class="hint">Suggestions from existing records</p>
     <label>Contact type <span class="req">*</span></label>
@@ -275,10 +295,66 @@ textarea{resize:none;line-height:1.5;}
   </div>
 </div>
 
+<!-- ── MAP DASHBOARD TAB ───────────────────────────────────────────── -->
+<div id="pane-map" class="pane">
+
+  <!-- Stats bar -->
+  <div id="map-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;">
+    <div class="ms-card total"><div class="ms-num" id="ms-total">—</div><div class="ms-lbl">Visits</div></div>
+    <div class="ms-card home"><div class="ms-num" id="ms-home">—</div><div class="ms-lbl">Home</div></div>
+    <div class="ms-card follow"><div class="ms-num" id="ms-follow">—</div><div class="ms-lbl">Follow-up</div></div>
+    <div class="ms-card overdue"><div class="ms-num" id="ms-overdue">—</div><div class="ms-lbl">Overdue</div></div>
+  </div>
+
+  <!-- Map controls -->
+  <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;">
+    <select id="m-district" onchange="applyMapFilters()" style="flex:1;padding:8px 10px;border:1.5px solid #dde3ea;border-radius:8px;font-size:12px;background:#fff;outline:none;">
+      <option value="">All districts</option>
+      <option value="District 1">District 1 — SMA</option>
+      <option value="District 2">District 2 — Jami Omar</option>
+    </select>
+    <select id="m-outcome" onchange="applyMapFilters()" style="flex:1;padding:8px 10px;border:1.5px solid #dde3ea;border-radius:8px;font-size:12px;background:#fff;outline:none;">
+      <option value="">All outcomes</option>
+      <option value="Home">Home</option>
+      <option value="Not Home">Not Home</option>
+      <option value="Follow-up Needed">Follow-up</option>
+      <option value="Declined">Declined</option>
+    </select>
+  </div>
+  <div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;">
+    <select id="m-daterange" onchange="applyMapFilters()" style="flex:1;padding:8px 10px;border:1.5px solid #dde3ea;border-radius:8px;font-size:12px;background:#fff;outline:none;">
+      <option value="all">All time</option>
+      <option value="today">Today</option>
+      <option value="week">This week</option>
+      <option value="month">This month</option>
+    </select>
+    <button id="m-heatmap-btn" onclick="toggleHeatmap()" style="flex:1;padding:8px 10px;border:1.5px solid #dde3ea;border-radius:8px;font-size:12px;background:#fff;cursor:pointer;color:#1A5276;font-weight:500;">
+      🌡 Heatmap
+    </button>
+    <button onclick="refreshMapData()" style="padding:8px 12px;border:1.5px solid #dde3ea;border-radius:8px;font-size:12px;background:#fff;cursor:pointer;color:#1A5276;">
+      ↻
+    </button>
+  </div>
+
+  <!-- Map container -->
+  <div id="outreach-map" style="width:100%;height:420px;border-radius:12px;border:0.5px solid #e0e6ed;overflow:hidden;"></div>
+
+  <!-- Legend -->
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:11px;">
+    <div style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#27AE60;display:inline-block;"></span>Home</div>
+    <div style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#E74C3C;display:inline-block;"></span>Not Home</div>
+    <div style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#F39C12;display:inline-block;"></span>Follow-up</div>
+    <div style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#2980B9;display:inline-block;"></span>Declined</div>
+    <div style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:50%;background:#E74C3C;border:2px solid #FF6B6B;display:inline-block;"></span>Overdue</div>
+  </div>
+
+  <div id="map-status" style="font-size:10px;color:#aaa;text-align:right;margin-top:6px;"></div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────
 const API_KEY   = 'AIzaSyCdzyUE88sOEbzTBmnFrX3_M92uTGwSaK4';
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx-wI66k2ogwRu73znof5H3dZHYn7XCGiqpShEgXY1e6910iy2S_C8nTL_AWT30_vi-/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxWxZ1KJI1JSIUlh_AwK896lUMkSWtJBVM6NnpPE_gNqbLVK1N5uUHotCJbYAmwzx6W/exec';
 
 const ZONES = {
   D1:['SMA-01 - Stittsville Village Core','SMA-02 - Crossing Bridge','SMA-03 - Deer Run / Timbermere','SMA-04 - Jackson Trails','SMA-05 - Fairwinds','SMA-06 - Poole Creek','SMA-07 - Forest Creek / Wyldewood','SMA-08 - Fernbank Crossing','SMA-09 - Blackstone','SMA-10 - EdenWylde','SMA-11 - Westwood','SMA-12 - Bradley Commons','SMA-13 - Abbotts Run','SMA-14 - W-4 South Stittsville','SMA-15 - Amberwood / Amberlakes','SMA-16 - Carp Rd / Rural North','SMA-17 - Bryanston Gate / Maple Grove'],
@@ -615,18 +691,65 @@ async function submitForm(){
   const districtEl=document.getElementById('district');
   const unit=document.getElementById('unit').value.trim();
   const addr=document.getElementById('address').value.trim();
+  // ── Sanitise inputs before storing ──────────────────────────────────
+  function toTitleCase(str) {
+    if (!str) return '';
+    return str.trim().replace(/\w\S*/g, w =>
+      w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+    ).replace(/Mc(\w)/g, (_, c) => 'Mc' + c.toUpperCase())   // McName
+     .replace(/O'(\w)/g, (_, c) => "O'" + c.toUpperCase())  // O'Brien
+     .replace(/Al-(\w)/g, (_, c) => 'Al-' + c.toUpperCase()) // Al-Farsi
+     .replace(/El-(\w)/g, (_, c) => 'El-' + c.toUpperCase()) // El-Sayed
+     .replace(/Abu (\w)/g, (_, c) => 'Abu ' + c.toUpperCase()) // Abu Hassan
+     .replace(/Bin (\w)/g, (_, c) => 'Bin ' + c.toUpperCase()) // Bin Laden -> Bin Laden
+     .replace(/Bt\.? (\w)/g, (_, c) => 'Bt. ' + c.toUpperCase()); // Bt. Hassan
+  }
+
+  function toTitleCaseAddress(str) {
+    if (!str) return '';
+    // Title-case but preserve unit/apt prefixes and directional abbreviations
+    return str.trim().replace(/\w\S*/g, w => {
+      const lower = w.toLowerCase();
+      // Keep abbreviations and directions as-is
+      if (['n','s','e','w','ne','nw','se','sw','apt','unit','ste','rd','st','ave','blvd','dr','cres','crt','pl','way','hwy','pkwy','ln'].includes(lower)) {
+        return w.toUpperCase() === w ? w : // already upper — keep
+               lower === 'rd' || lower === 'st' || lower === 'ave' || lower === 'dr' || lower === 'blvd' || lower === 'cres' || lower === 'crt' || lower === 'pl' || lower === 'way' ? w.charAt(0).toUpperCase() + w.slice(1).toLowerCase() :
+               w;
+      }
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    });
+  }
+
+  // Standardise timestamp to YYYY-MM-DD HH:MM (local time, zero-padded)
+  function localTimestamp() {
+    const d = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  }
+
+  const rawAddress    = addr + (unit ? ', ' + toTitleCaseAddress(unit) : '');
+  const cleanAddress  = toTitleCaseAddress(rawAddress);
+  const cleanName     = toTitleCase(document.getElementById('contact-name').value);
+  const cleanNotes    = document.getElementById('notes').value.trim().replace(/\s+$/,'');
+  const cleanFuReason = selectedOutcome==='Follow-up Needed'
+    ? document.getElementById('fu-reason').value.trim() : '';
+
+  // Write cleaned values back to form fields so returning household cache stays clean
+  document.getElementById('address').value      = cleanAddress;
+  document.getElementById('contact-name').value = cleanName;
+
   const payload={
-    timestamp:new Date().toISOString().replace('T',' ').slice(0,16),
+    timestamp:localTimestamp(),
     district:districtEl.options[districtEl.selectedIndex].text,
     zone:document.getElementById('zone').value,
-    address:addr+(unit?', '+unit:''),
-    contactName:document.getElementById('contact-name').value.trim(),
+    address:cleanAddress,
+    contactName:cleanName,
     contactType:document.getElementById('contact-type').value,
     outcome:selectedOutcome,
     followupDate:selectedOutcome==='Follow-up Needed'?document.getElementById('fu-date').value:'',
-    followupReason:selectedOutcome==='Follow-up Needed'?document.getElementById('fu-reason').value.trim():'',
+    followupReason:cleanFuReason,
     volunteers:Array.from(selectedVols).join(', '),
-    notes:document.getElementById('notes').value.trim()
+    notes:cleanNotes
   };
   if(SHEET_URL!=='YOUR_APPS_SCRIPT_WEB_APP_URL_HERE'){
     try{await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});}catch(e){}
@@ -802,6 +925,256 @@ async function saveNotes(encodedAddr,textareaId,btn){
     cachedRecords.forEach(r=>{if((r.address||'').toLowerCase()===address.toLowerCase())r.notes=notes;});
   }catch(e){btn.textContent='Save notes';btn.disabled=false;}
 }
+
+// ══════════════════════════════════════════════════════════════════════
+//  MAP DASHBOARD
+// ══════════════════════════════════════════════════════════════════════
+let outreachMap    = null;
+let mapMarkers     = [];
+let mapInitialized = false;
+let heatmapOn      = false;
+let heatLayer      = null;
+let mapAutoRefresh = null;
+
+const OUTCOME_COLORS = {
+  'Home':            '#27AE60',
+  'Not Home':        '#E74C3C',
+  'Follow-up Needed':'#F39C12',
+  'Declined':        '#2980B9'
+};
+
+// Zone polygons — D1 and D2 boundaries for overlay
+const D1_ZONES_GEO = [
+  {id:'SMA-01',name:'SMA-01 Village Core',      coords:[[45.2680,-75.9360],[45.2680,-75.9180],[45.2620,-75.9150],[45.2555,-75.9150],[45.2520,-75.9180],[45.2520,-75.9300],[45.2555,-75.9360],[45.2620,-75.9370]]},
+  {id:'SMA-02',name:'SMA-02 Crossing Bridge',   coords:[[45.2680,-75.9530],[45.2680,-75.9360],[45.2555,-75.9360],[45.2520,-75.9300],[45.2490,-75.9360],[45.2490,-75.9530],[45.2555,-75.9530]]},
+  {id:'SMA-03',name:'SMA-03 Deer Run',          coords:[[45.2520,-75.9300],[45.2520,-75.9150],[45.2460,-75.9130],[45.2400,-75.9150],[45.2390,-75.9260],[45.2420,-75.9330],[45.2490,-75.9360]]},
+  {id:'SMA-04',name:'SMA-04 Jackson Trails',    coords:[[45.2490,-75.9530],[45.2490,-75.9360],[45.2420,-75.9330],[45.2390,-75.9260],[45.2350,-75.9300],[45.2330,-75.9430],[45.2380,-75.9530],[45.2440,-75.9540]]},
+  {id:'SMA-05',name:'SMA-05 Fairwinds',         coords:[[45.2555,-75.9150],[45.2620,-75.9150],[45.2640,-75.9050],[45.2600,-75.8980],[45.2540,-75.8980],[45.2490,-75.9020],[45.2480,-75.9130],[45.2460,-75.9130],[45.2520,-75.9150]]},
+  {id:'SMA-06',name:'SMA-06 Poole Creek',       coords:[[45.2380,-75.9530],[45.2330,-75.9430],[45.2300,-75.9380],[45.2260,-75.9380],[45.2230,-75.9430],[45.2230,-75.9530],[45.2300,-75.9600],[45.2360,-75.9580]]},
+  {id:'SMA-07',name:'SMA-07 Forest Creek',      coords:[[45.2460,-75.9130],[45.2490,-75.9020],[45.2460,-75.8940],[45.2400,-75.8920],[45.2350,-75.8980],[45.2330,-75.9100],[45.2350,-75.9200],[45.2400,-75.9150]]},
+  {id:'SMA-08',name:'SMA-08 Fernbank Crossing', coords:[[45.2760,-75.9050],[45.2800,-75.8950],[45.2760,-75.8860],[45.2700,-75.8840],[45.2640,-75.8880],[45.2600,-75.8980],[45.2640,-75.9050],[45.2700,-75.9060]]},
+  {id:'SMA-09',name:'SMA-09 Blackstone',        coords:[[45.2870,-75.9050],[45.2920,-75.8960],[45.2890,-75.8860],[45.2820,-75.8820],[45.2760,-75.8860],[45.2800,-75.8950],[45.2760,-75.9050]]},
+  {id:'SMA-10',name:'SMA-10 EdenWylde',         coords:[[45.2640,-75.9050],[45.2700,-75.9060],[45.2700,-75.8960],[45.2640,-75.8940],[45.2600,-75.8980]]},
+  {id:'SMA-11',name:'SMA-11 Westwood',          coords:[[45.2760,-75.9200],[45.2760,-75.9050],[45.2700,-75.9060],[45.2700,-75.8960],[45.2640,-75.8940],[45.2620,-75.8920],[45.2620,-75.9000],[45.2680,-75.9050],[45.2680,-75.9180]]},
+  {id:'SMA-12',name:'SMA-12 Bradley Commons',   coords:[[45.2950,-75.9050],[45.2980,-75.8900],[45.2940,-75.8820],[45.2870,-75.8800],[45.2820,-75.8820],[45.2890,-75.8860],[45.2920,-75.8960],[45.2920,-75.9060]]},
+  {id:'SMA-13',name:'SMA-13 Abbotts Run',       coords:[[45.2680,-75.9360],[45.2760,-75.9360],[45.2760,-75.9200],[45.2680,-75.9180]]},
+  {id:'SMA-15',name:'SMA-15 Amberwood',         coords:[[45.2980,-75.9300],[45.2980,-75.9050],[45.2920,-75.9060],[45.2920,-75.9200],[45.2870,-75.9200],[45.2870,-75.9360],[45.2920,-75.9360]]},
+  {id:'SMA-17',name:'SMA-17 Bryanston Gate',    coords:[[45.2870,-75.9360],[45.2870,-75.9050],[45.2760,-75.9050],[45.2760,-75.9200],[45.2760,-75.9360]]},
+];
+
+const D2_ZONES_GEO = [
+  {id:'JO-01',name:'JO-01 Bells Corners Core',  coords:[[45.320,-75.860],[45.320,-75.838],[45.315,-75.832],[45.306,-75.832],[45.302,-75.838],[45.302,-75.850],[45.308,-75.858],[45.316,-75.862]]},
+  {id:'JO-02',name:'JO-02 Westcliffe Estates',  coords:[[45.302,-75.850],[45.302,-75.838],[45.306,-75.832],[45.306,-75.820],[45.298,-75.820],[45.294,-75.828],[45.294,-75.846],[45.298,-75.852]]},
+  {id:'JO-03',name:'JO-03 Lynwood Village',     coords:[[45.320,-75.838],[45.326,-75.830],[45.326,-75.816],[45.318,-75.812],[45.312,-75.816],[45.308,-75.820],[45.306,-75.832],[45.315,-75.832]]},
+  {id:'JO-04',name:'JO-04 Briargreen',          coords:[[45.306,-75.820],[45.312,-75.816],[45.312,-75.804],[45.306,-75.800],[45.300,-75.800],[45.296,-75.806],[45.294,-75.816],[45.294,-75.828],[45.298,-75.820]]},
+  {id:'JO-05',name:'JO-05 Longfields',          coords:[[45.294,-75.828],[45.294,-75.816],[45.296,-75.806],[45.292,-75.800],[45.286,-75.800],[45.282,-75.808],[45.282,-75.822],[45.288,-75.830]]},
+  {id:'JO-06',name:'JO-06 Bridlewood',          coords:[[45.300,-75.800],[45.306,-75.800],[45.308,-75.790],[45.304,-75.780],[45.296,-75.778],[45.290,-75.782],[45.288,-75.792],[45.292,-75.800]]},
+  {id:'JO-07',name:'JO-07 Glen Cairn',          coords:[[45.308,-75.858],[45.302,-75.850],[45.298,-75.852],[45.294,-75.846],[45.290,-75.848],[45.288,-75.858],[45.292,-75.866],[45.300,-75.866],[45.308,-75.862]]},
+  {id:'JO-08',name:'JO-08 Crystal Beach',       coords:[[45.326,-75.816],[45.334,-75.812],[45.336,-75.800],[45.330,-75.794],[45.322,-75.794],[45.316,-75.798],[45.312,-75.804],[45.312,-75.816],[45.318,-75.812]]},
+  {id:'JO-09',name:'JO-09 Bayshore',            coords:[[45.346,-75.816],[45.348,-75.800],[45.344,-75.792],[45.336,-75.792],[45.334,-75.800],[45.334,-75.812],[45.338,-75.818],[45.344,-75.820]]},
+  {id:'JO-10',name:'JO-10 Accora Village',      coords:[[45.356,-75.820],[45.358,-75.800],[45.352,-75.794],[45.346,-75.794],[45.344,-75.800],[45.346,-75.816],[45.350,-75.820]]},
+  {id:'JO-11',name:'JO-11 Centrepointe',        coords:[[45.336,-75.800],[45.344,-75.792],[45.344,-75.780],[45.338,-75.774],[45.330,-75.774],[45.326,-75.780],[45.326,-75.792],[45.330,-75.798]]},
+  {id:'JO-12',name:'JO-12 Craig Henry',         coords:[[45.326,-75.792],[45.330,-75.798],[45.326,-75.780],[45.322,-75.776],[45.316,-75.778],[45.312,-75.784],[45.312,-75.796],[45.316,-75.800],[45.322,-75.798]]},
+  {id:'JO-13',name:'JO-13 Meadowlands',         coords:[[45.344,-75.780],[45.352,-75.774],[45.352,-75.762],[45.344,-75.758],[45.336,-75.762],[45.332,-75.770],[45.334,-75.778],[45.338,-75.778]]},
+  {id:'JO-14',name:'JO-14 Parkwood Hills',      coords:[[45.330,-75.774],[45.338,-75.774],[45.336,-75.762],[45.330,-75.758],[45.322,-75.760],[45.318,-75.768],[45.320,-75.776],[45.326,-75.778]]},
+];
+
+// Simple geocoder — maps Ottawa addresses to approximate coords
+// Uses Nominatim (free, no key needed) with caching
+const geocodeCache = {};
+
+async function geocodeAddress(address) {
+  if (geocodeCache[address]) return geocodeCache[address];
+  try {
+    const q = encodeURIComponent(address + ', Ottawa, Ontario, Canada');
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${q}&format=json&limit=1`,{
+      headers:{'Accept-Language':'en','User-Agent':'OttawaOutreachTracker/1.0'}
+    });
+    const data = await res.json();
+    if (data && data.length > 0) {
+      const coords = [parseFloat(data[0].lat), parseFloat(data[0].lon)];
+      geocodeCache[address] = coords;
+      return coords;
+    }
+  } catch(e) {}
+  return null;
+}
+
+function initMap() {
+  if (mapInitialized) return;
+  outreachMap = L.map('outreach-map', {zoomControl:true}).setView([45.291, -75.876], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom:19
+  }).addTo(outreachMap);
+
+  // Draw zone polygons — D1 green, D2 blue
+  D1_ZONES_GEO.forEach(z => {
+    L.polygon(z.coords, {color:'#1D9E75',fillColor:'#1D9E75',fillOpacity:0.08,weight:1.5,dashArray:'4 3'})
+     .addTo(outreachMap).bindTooltip(z.name, {sticky:true});
+  });
+  D2_ZONES_GEO.forEach(z => {
+    L.polygon(z.coords, {color:'#185FA5',fillColor:'#185FA5',fillOpacity:0.08,weight:1.5,dashArray:'4 3'})
+     .addTo(outreachMap).bindTooltip(z.name, {sticky:true});
+  });
+
+  // Mosque pins
+  const mosqueIcon = (c) => L.divIcon({className:'',
+    html:`<div style="width:22px;height:22px;background:${c};border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:700;box-shadow:0 2px 5px rgba(0,0,0,.3)">M</div>`,
+    iconAnchor:[11,11]});
+  L.marker([45.26006,-75.92219],{icon:mosqueIcon('#0F6E56')}).addTo(outreachMap)
+   .bindTooltip('<b>Stittsville Muslim Association</b><br>District 1');
+  L.marker([45.31154,-75.82844],{icon:mosqueIcon('#185FA5')}).addTo(outreachMap)
+   .bindTooltip('<b>Jami Omar</b><br>District 2');
+
+  mapInitialized = true;
+}
+
+function makePin(lat, lng, record) {
+  const color = OUTCOME_COLORS[record.lastOutcome] || '#95A5A6';
+  const isOverdue = record.isOverdue;
+  const size = 12;
+
+  const icon = L.divIcon({
+    className:'',
+    html:`<div class="${isOverdue?'pin-overdue':''}" style="width:${size}px;height:${size}px;background:${color};border:2px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.35);${isOverdue?'border-color:#E74C3C;border-width:2px;':''}"></div>`,
+    iconAnchor:[size/2, size/2]
+  });
+
+  const marker = L.marker([lat, lng], {icon});
+  marker.bindPopup(`
+    <div style="min-width:160px;font-size:13px;">
+      <b>${record.contactName||'Unknown'}</b><br>
+      <span style="font-size:11px;color:#666">${record.address}</span><br>
+      <span style="font-size:11px;color:#1A5276">${record.zone||''}</span><br>
+      <span style="display:inline-block;margin-top:4px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600;background:${color}22;color:${color}">${record.lastOutcome||'Unknown'}</span>
+      ${isOverdue?'<span style="color:#E74C3C;font-size:11px;font-weight:600;margin-left:4px;">OVERDUE</span>':''}
+      <br><span style="font-size:10px;color:#999">${record.lastDate||''} · ${record.lastVolunteer||''}</span>
+      ${record.notes?`<br><span style="font-size:11px;color:#555;font-style:italic">${record.notes}</span>`:''}
+    </div>
+  `);
+  return marker;
+}
+
+async function renderMapPins(records) {
+  // Clear existing markers
+  mapMarkers.forEach(m => outreachMap.removeLayer(m));
+  mapMarkers = [];
+
+  // Geocode in batches to avoid rate limiting
+  const toGeocode = records.filter(r => r.address && !geocodeCache[r.address]);
+  for (let i = 0; i < toGeocode.length; i++) {
+    await geocodeAddress(toGeocode[i].address);
+    if (i < toGeocode.length - 1) await new Promise(r => setTimeout(r, 200)); // 200ms between requests
+  }
+
+  // Place pins
+  for (const record of records) {
+    const coords = geocodeCache[record.address];
+    if (!coords) continue;
+    const marker = makePin(coords[0], coords[1], record);
+    marker.addTo(outreachMap);
+    mapMarkers.push(marker);
+  }
+
+  document.getElementById('map-status').textContent =
+    `${mapMarkers.length} pins · updated ${new Date().toLocaleTimeString()}`;
+}
+
+function applyMapFilters() {
+  const district = document.getElementById('m-district').value.toLowerCase();
+  const outcome  = document.getElementById('m-outcome').value;
+  const dateRange= document.getElementById('m-daterange').value;
+  const today    = new Date();
+
+  let filtered = cachedRecords.filter(r => {
+    if (district && !(r.district||'').toLowerCase().includes(district)) return false;
+    if (outcome && r.lastOutcome !== outcome) return false;
+    if (dateRange !== 'all' && r.lastDate) {
+      const d = new Date(r.lastDate);
+      if (dateRange==='today') {
+        if (d.toDateString() !== today.toDateString()) return false;
+      } else if (dateRange==='week') {
+        const weekAgo = new Date(today); weekAgo.setDate(today.getDate()-7);
+        if (d < weekAgo) return false;
+      } else if (dateRange==='month') {
+        const monthAgo = new Date(today); monthAgo.setMonth(today.getMonth()-1);
+        if (d < monthAgo) return false;
+      }
+    }
+    return true;
+  });
+
+  updateMapStats(filtered);
+  renderMapPins(filtered);
+  updateHeatmap(filtered);
+}
+
+function updateMapStats(records) {
+  const total   = records.length;
+  const home    = records.filter(r=>r.lastOutcome==='Home').length;
+  const follow  = records.filter(r=>r.lastOutcome==='Follow-up Needed').length;
+  const overdue = records.filter(r=>r.isOverdue).length;
+  document.getElementById('ms-total').textContent  = total;
+  document.getElementById('ms-home').textContent   = home;
+  document.getElementById('ms-follow').textContent = follow;
+  document.getElementById('ms-overdue').textContent= overdue;
+  if (overdue > 0) {
+    document.querySelector('.ms-card.overdue').style.background='#FFF0F0';
+  }
+}
+
+function toggleHeatmap() {
+  heatmapOn = !heatmapOn;
+  const btn = document.getElementById('m-heatmap-btn');
+  if (heatmapOn) {
+    btn.style.background='#1A5276';
+    btn.style.color='white';
+    btn.style.borderColor='#1A5276';
+    // Show heat overlay — use circle overlays as a simple heatmap approximation
+    // (Leaflet.heat not available, so we use semi-transparent circles)
+    updateHeatmap(cachedRecords);
+    mapMarkers.forEach(m => outreachMap.removeLayer(m));
+  } else {
+    btn.style.background='#fff';
+    btn.style.color='#1A5276';
+    btn.style.borderColor='#dde3ea';
+    if (heatLayer) { outreachMap.removeLayer(heatLayer); heatLayer=null; }
+    applyMapFilters();
+  }
+}
+
+function updateHeatmap(records) {
+  if (!heatmapOn) return;
+  if (heatLayer) outreachMap.removeLayer(heatLayer);
+  const group = L.layerGroup();
+  records.forEach(r => {
+    const coords = geocodeCache[r.address];
+    if (!coords) return;
+    const color = OUTCOME_COLORS[r.lastOutcome] || '#95A5A6';
+    L.circle(coords, {radius:120, color:'none', fillColor:color, fillOpacity:0.35})
+     .addTo(group);
+  });
+  heatLayer = group;
+  group.addTo(outreachMap);
+}
+
+async function refreshMapData() {
+  document.getElementById('map-status').textContent = 'Refreshing...';
+  await preloadRecords();
+  applyMapFilters();
+}
+
+// Auto-refresh map every 2 minutes when tab is active
+function startMapAutoRefresh() {
+  if (mapAutoRefresh) clearInterval(mapAutoRefresh);
+  mapAutoRefresh = setInterval(() => {
+    if (document.getElementById('pane-map').classList.contains('active')) {
+      refreshMapData();
+    }
+  }, 120000);
+}
+
 </script>
 </body>
 </html>
