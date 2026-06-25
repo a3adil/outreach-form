@@ -427,16 +427,29 @@ function switchTab(tab, btn) {
   document.getElementById('visit-form').classList.remove('active');
   document.getElementById('success-wrap').style.display='none';
   document.getElementById('pane-search').classList.remove('active');
-  document.getElementById('notice-wrap').style.display = tab==='form'?'block':'none';
+  document.getElementById('pane-map').classList.remove('active');
+  document.getElementById('notice-wrap').style.display = tab==='form' ? 'block' : 'none';
+
   if (tab==='form') {
     document.getElementById('visit-form').classList.add('active');
     if (prefillData) applyPrefill();
-  } else {
+
+  } else if (tab==='search') {
     document.getElementById('pane-search').classList.add('active');
     updateCacheStatus();
-    // Refresh if cache is stale
-    if (!cacheTime || (new Date()-cacheTime)>CACHE_TTL) preloadRecords();
+    if (!cacheTime||(new Date()-cacheTime)>CACHE_TTL) preloadRecords();
     populateVolFilter();
+
+  } else if (tab==='map') {
+    document.getElementById('pane-map').classList.add('active');
+    if (!mapInitialized) initMap();
+    setTimeout(function(){ if(outreachMap) outreachMap.invalidateSize(); }, 150);
+    if (!cacheTime||(new Date()-cacheTime)>CACHE_TTL) {
+      preloadRecords().then(function(){ applyMapFilters(); });
+    } else {
+      applyMapFilters();
+    }
+    startMapAutoRefresh();
   }
 }
 
