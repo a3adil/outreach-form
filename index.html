@@ -115,6 +115,9 @@ textarea{resize:none;line-height:1.5;}
 .no-results .icon{font-size:36px;margin-bottom:10px;}
 .loading-results{text-align:center;padding:30px;color:#888;font-size:13px;}
 .cache-status{font-size:10px;color:#aaa;text-align:right;padding:0 2px 6px;}
+/* Map pane overrides */
+#pane-map.active{display:block;max-width:100%;width:100%;padding:10px;}
+#outreach-map{width:100% !important;height:55vh !important;min-height:320px;border-radius:12px;border:0.5px solid #e0e6ed;overflow:hidden;}
 
 /* Map stats bar */
 .ms-card{background:#fff;border-radius:8px;padding:8px 6px;text-align:center;border:0.5px solid #e0e6ed;}
@@ -296,7 +299,7 @@ textarea{resize:none;line-height:1.5;}
 </div>
 
 <!-- ── MAP DASHBOARD TAB ───────────────────────────────────────────── -->
-<div id="pane-map" class="pane">
+<div id="pane-map" class="pane" style="max-width:100%;padding:10px;">
 
   <!-- Stats bar -->
   <div id="map-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;">
@@ -441,9 +444,16 @@ function switchTab(tab, btn) {
     populateVolFilter();
 
   } else if (tab==='map') {
-    document.getElementById('pane-map').classList.add('active');
-    if (!mapInitialized) initMap();
-    setTimeout(function(){ if(outreachMap) outreachMap.invalidateSize(); }, 150);
+    var mapPane = document.getElementById('pane-map');
+    mapPane.classList.add('active');
+    mapPane.style.display = 'block';
+    if (!mapInitialized) {
+      initMap();
+    }
+    // Multiple invalidateSize calls to handle any rendering delay
+    setTimeout(function(){ if(outreachMap) outreachMap.invalidateSize(); }, 100);
+    setTimeout(function(){ if(outreachMap) outreachMap.invalidateSize(); }, 400);
+    setTimeout(function(){ if(outreachMap) outreachMap.invalidateSize(); }, 800);
     if (!cacheTime||(new Date()-cacheTime)>CACHE_TTL) {
       preloadRecords().then(function(){ applyMapFilters(); });
     } else {
