@@ -225,7 +225,8 @@ textarea{resize:none;line-height:1.5;}
       <option value="">— select —</option>
       <option value="District 1 - SMA">District 1 — Stittsville (SMA)</option>
       <option value="District 2 - Jami Omar">District 2 — Jami Omar</option>
-      <option value="Both">Both districts</option>
+      <option value="District 3 - Kanata North">District 3 — Kanata North (KMA)</option>
+      <option value="Multiple">Multiple districts</option>
     </select>
     <label style="font-size:13px;font-weight:500;color:#333;display:block;margin-bottom:4px;">Why do you want to volunteer?</label>
     <textarea id="req-reason" rows="3" placeholder="Brief note for the coordinator..."
@@ -312,6 +313,7 @@ textarea{resize:none;line-height:1.5;}
         <option value="">— select district —</option>
         <option value="D1">District 1 — Stittsville (SMA)</option>
         <option value="D2">District 2 — Jami Omar</option>
+        <option value="D3">District 3 — Kanata North (KMA)</option>
       </select>
       <div class="err-msg" id="err-district">Please select a district</div>
       <label>Zone <span class="req">*</span></label>
@@ -407,6 +409,7 @@ textarea{resize:none;line-height:1.5;}
         <option value="">All districts</option>
         <option value="District 1">District 1 — SMA</option>
         <option value="District 2">District 2 — Jami Omar</option>
+        <option value="District 3">District 3 — Kanata North</option>
       </select>
       <select id="s-zone" onchange="runSearch()">
         <option value="">All zones</option>
@@ -448,6 +451,7 @@ textarea{resize:none;line-height:1.5;}
         <option value="">All districts</option>
         <option value="District 1">District 1 — SMA</option>
         <option value="District 2">District 2 — Jami Omar</option>
+        <option value="District 3">District 3 — Kanata North</option>
       </select>
       <select id="m-outcome" onchange="applyMapFilters()" style="flex:1;padding:8px 10px;border:1.5px solid #dde3ea;border-radius:8px;font-size:12px;background:#fff;outline:none;">
         <option value="">All outcomes</option>
@@ -486,12 +490,13 @@ textarea{resize:none;line-height:1.5;}
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────
 const API_KEY         = 'AIzaSyCdzyUE88sOEbzTBmnFrX3_M92uTGwSaK4';
-const SHEET_URL       = 'https://script.google.com/macros/s/AKfycbzG26SsKgu_ekKhXfn48EKCUyefPNa-EVXZhVukowrPh4GhCwc4MAyrzsF6XJlmdx8/exec';
+const SHEET_URL       = 'https://script.google.com/macros/s/AKfycbzwvV0VvNTcd_CElL-DOCta72R4xLSnEPiUdWzouu5PYU-7r3aSfTlrp3qjDkRcNg8/exec';
 const GOOGLE_CLIENT_ID= '692135452588-htg8fvbmcn2q16480at5jhtjbp0tqd84.apps.googleusercontent.com';
 
 const ZONES = {
   D1:['SMA-01 - Stittsville Village Core','SMA-02 - Crossing Bridge','SMA-03 - Deer Run / Timbermere','SMA-04 - Jackson Trails','SMA-05 - Fairwinds','SMA-06 - Poole Creek','SMA-07 - Forest Creek / Wyldewood','SMA-08 - Fernbank Crossing','SMA-09 - Blackstone','SMA-10 - EdenWylde','SMA-11 - Westwood','SMA-12 - Bradley Commons','SMA-13 - Abbotts Run','SMA-14 - W-4 South Stittsville','SMA-15 - Amberwood / Amberlakes','SMA-16 - Carp Rd / Rural North','SMA-17 - Bryanston Gate / Maple Grove'],
-  D2:['JO-01 - Bells Corners Core','JO-02 - Westcliffe Estates','JO-03 - Lynwood Village','JO-04 - Briargreen','JO-05 - Longfields','JO-06 - Bridlewood','JO-07 - Glen Cairn / Emerald Meadows','JO-08 - Crystal Beach','JO-09 - Bayshore','JO-10 - Accora Village','JO-11 - Centrepointe','JO-12 - Craig Henry / Manordale','JO-13 - Meadowlands / Borden Farm','JO-14 - Parkwood Hills']
+  D2:['JO-01 - Bells Corners Core','JO-02 - Westcliffe Estates','JO-03 - Lynwood Village','JO-04 - Briargreen','JO-05 - Longfields','JO-07 - Glen Cairn / Emerald Meadows','JO-08 - Crystal Beach','JO-09 - Bayshore','JO-10 - Accora Village','JO-11 - Centrepointe','JO-12 - Craig Henry / Manordale','JO-13 - Meadowlands / Borden Farm','JO-14 - Parkwood Hills'],
+  D3:['KN-01 - Morgans Grant','KN-02 - Bridlewood','KN-03 - Kanata Lakes / Beaverbrook','KN-04 - Hazeldean / South Kanata']
 };
 
 // ── State ───────────────────────────────────────────────────────────────
@@ -1099,6 +1104,7 @@ function onSearchDistrictChange(){
   zs.innerHTML='<option value="">All zones</option>';
   if(d==='District 1') ZONES.D1.forEach(z=>zs.innerHTML+=`<option value="${z}">${z}</option>`);
   else if(d==='District 2') ZONES.D2.forEach(z=>zs.innerHTML+=`<option value="${z}">${z}</option>`);
+  else if(d==='District 3') ZONES.D3.forEach(z=>zs.innerHTML+=`<option value="${z}">${z}</option>`);
   runSearch();
 }
 function toggleOverdue(){const cb=document.getElementById('s-overdue');cb.checked=!cb.checked;runSearch();}
@@ -1215,6 +1221,13 @@ const D2_GEO=[
   {n:'JO-14 Parkwood Hills',c:[[45.330,-75.774],[45.338,-75.774],[45.336,-75.762],[45.330,-75.758],[45.322,-75.760],[45.318,-75.768],[45.320,-75.776],[45.326,-75.778]]},
 ];
 
+
+const D3_GEO=[
+  {n:'KN-01 Morgans Grant',c:[[45.319,-75.916],[45.326,-75.910],[45.330,-75.902],[45.326,-75.894],[45.318,-75.892],[45.312,-75.898],[45.312,-75.910],[45.316,-75.918]]},
+  {n:'KN-02 Bridlewood',c:[[45.310,-75.892],[45.318,-75.892],[45.326,-75.894],[45.330,-75.902],[45.328,-75.918],[45.320,-75.924],[45.310,-75.920],[45.304,-75.910],[45.304,-75.898]]},
+  {n:'KN-03 Kanata Lakes',c:[[45.330,-75.902],[45.338,-75.894],[45.342,-75.880],[45.336,-75.872],[45.328,-75.874],[45.322,-75.880],[45.320,-75.892],[45.326,-75.894]]},
+  {n:'KN-04 Hazeldean',c:[[45.304,-75.898],[45.310,-75.892],[45.304,-75.882],[45.296,-75.878],[45.290,-75.882],[45.288,-75.892],[45.292,-75.900],[45.298,-75.904]]},
+];
 function initMap(){
   if(mapInitialized) return;
   outreachMap=L.map('outreach-map',{zoomControl:true}).setView([45.291,-75.876],12);
@@ -1240,10 +1253,19 @@ function initMap(){
      .addTo(outreachMap).bindTooltip(z.n+(visits?' ('+visits+' visits)':''),{sticky:true});
   });
 
+  // D3 zone polygons
+  D3_GEO.forEach(z=>{
+    const visits=visitsByZone[z.n]||0;
+    const opacity=0.06+0.28*(visits/maxVisits);
+    L.polygon(z.c,{color:'#6B2FA0',fillColor:'#9B59B6',fillOpacity:opacity,weight:1.5,dashArray:'4 3'})
+     .addTo(outreachMap).bindTooltip(z.n+(visits?' ('+visits+' visits)':''),{sticky:true});
+  });
+
   // Mosque pins
   const mIcon=c=>L.divIcon({className:'',html:`<div style="width:22px;height:22px;background:${c};border:3px solid white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:white;font-weight:700;box-shadow:0 2px 5px rgba(0,0,0,.3)">M</div>`,iconAnchor:[11,11]});
   L.marker([45.26006,-75.92219],{icon:mIcon('#0F6E56')}).addTo(outreachMap).bindTooltip('<b>Stittsville Muslim Association</b><br>District 1');
   L.marker([45.31154,-75.82844],{icon:mIcon('#185FA5')}).addTo(outreachMap).bindTooltip('<b>Jami Omar</b><br>District 2');
+  L.marker([45.3195,-75.9115],{icon:mIcon('#6B2FA0')}).addTo(outreachMap).bindTooltip('<b>KMA - Kanata Muslim Association</b><br>District 3');
   mapInitialized=true;
 }
 
